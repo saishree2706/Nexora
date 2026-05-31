@@ -1,0 +1,93 @@
+---
+import { site } from '../data/site.js';
+import { services } from '../data/services.js';
+import { verticals } from '../data/industries.js';
+import Icon from './Icon.astro';
+const year = new Date().getFullYear();
+const topServices = services.slice(0, 6);
+---
+<footer>
+  <div class="ft-rule"></div>
+
+  <div class="ft-top">
+    <div class="ft-brand">
+      <a href="#hero" class="ft-logo" aria-label={site.name}>
+        <img src="/nexora-logo.png" alt={site.legalName} width="170" height="48" />
+      </a>
+      <p class="ft-tag">{site.tagline}</p>
+      <p class="ft-pitch">
+        Multidisciplinary plant engineering across <a class="ind-link ind-link--g" href="#industries">onshore</a> &amp;
+        <a class="ind-link ind-link--b" href="#industries">offshore</a> systems — rooted in Silicon Beach City.
+      </p>
+      <a
+        class="ft-coords"
+        href={site.contact.mapsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Open location in Google Maps"
+      >
+        <Icon name="pin" size={14} />
+        <span>View on Maps</span>
+      </a>
+    </div>
+
+    <div class="ft-col">
+      <h4 class="ft-h">Navigate</h4>
+      <ul class="ft-links">
+        {site.nav.filter((n) => !n.cta).map((n) => (
+          <li><a href={n.href}>{n.label}</a></li>
+        ))}
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="ft-col">
+      <h4 class="ft-h">Services</h4>
+      <ul class="ft-links">
+        {topServices.map((s) => (
+          <li><a href="#services">{s.title}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="ft-col ft-meta">
+      <h4 class="ft-h">Get In Touch</h4>
+      <a class="ft-contact" href={`mailto:${site.contact.email}`}>
+        <Icon name="mail" size={14} />
+        <span>{site.contact.email}</span>
+      </a>
+      <a class="ft-contact" href={`tel:${site.contact.phoneTel}`}>
+        <Icon name="phone" size={14} />
+        <span>{site.contact.phone}</span>
+      </a>
+      <a class="ft-contact" href={site.contact.mapsUrl} target="_blank" rel="noopener noreferrer">
+        <Icon name="pin" size={14} />
+        <span>{site.contact.location}</span>
+      </a>
+
+      <div class="ft-status">
+        <div class="ft-meta-row">
+          <span class="ft-k">Status</span>
+          <span class="ft-v"><span class="ft-dot"></span> Open · accepting briefs</span>
+        </div>
+        <div class="ft-meta-row">
+          <span class="ft-k">Local time</span>
+          <span class="ft-v"><span id="liveClockFt">––:––</span> IST</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ft-rule"></div>
+
+  <div class="ft-bottom">
+    <div class="ft-copy">
+      © {year} {site.legalName}. All rights reserved.
+    </div>
+    <div class="ft-sign">
+      <span>Engineered with care in Mangaluru</span>
+      <span class="ft-spark">◆</span>
+      <span>Crafted by people, not algorithms</span>
+    </div>
+  </div>
+</footer>

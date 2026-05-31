@@ -1,0 +1,464 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site.js';
+import Footer from '../components/Footer.astro';
+
+const {
+  title       = `${site.name} — ${site.tagline}`,
+  description = site.description,
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"   content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#060D1F" />
+    <meta property="og:title"       content={site.name} />
+    <meta property="og:description" content={site.tagline} />
+    <meta property="og:type"        content="website" />
+    <!-- Favicon now uses the actual brand logo from the header -->
+    <link rel="icon" type="image/png" href="/nexora-logo.png" />
+    <link rel="apple-touch-icon" href="/nexora-logo.png" />
+    <!-- Theme init: runs synchronously BEFORE paint so there's no flash of
+         wrong theme. Reads stored preference, falls back to OS preference. -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('nexora-theme');
+          var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+          var theme = stored || (prefersLight ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@300;400;500&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+
+    <!-- SKIP LINK · keyboard / screen-reader navigation -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- LOADER -->
+    <div id="loader">
+    <div class="loader-logo">
+      <img src="/nexora-logo.png" alt="Nexora Global Engineering Solutions" width="180" height="58" />
+    </div>
+      <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+      <div class="loader-status" aria-live="polite">
+        <span class="ls-line">Initializing Systems</span>
+        <span class="ls-line">Loading Modules</span>
+        <span class="ls-line">Engaging Drives</span>
+        <span class="ls-line">Welcome</span>
+      </div>
+      <div class="loader-meta">
+        <span>Nexora · Global Engineering</span>
+        <span class="loader-meta-dot"></span>
+        <span>v1.0</span>
+      </div>
+    </div>
+
+    <!-- SCROLL PROGRESS -->
+    <div id="scrollProgress" aria-hidden="true"></div>
+
+    <!-- BACK TO TOP -->
+    <button id="toTop" aria-label="Back to top" title="Back to top">↑</button>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <!-- Three.js from CDN — same version proven in index.html -->
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Hero 3D scene — runs after THREE is globally available -->
+    <script is:inline>
+    (function () {
+      'use strict';
+      var isMob = window.innerWidth < 768;
+
+      function initThree() {
+        var canvas = document.getElementById('webgl');
+        var hero   = document.getElementById('hero');
+        if (!canvas || !hero || !window.THREE) return;
+
+        var THREE = window.THREE;
+        var W = hero.offsetWidth  || window.innerWidth;
+        var H = hero.offsetHeight || window.innerHeight;
+
+        /* Scene + fog */
+        var scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x04080F, 0.025);
+
+        /* Camera */
+        var camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 120);
+        camera.position.z = 16;
+
+        /* Renderer */
+        var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(W, H);
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+        /* ── Large background icosahedron (very subtle) */
+        var ico = new THREE.Mesh(
+          new THREE.IcosahedronGeometry(9, 1),
+          new THREE.MeshBasicMaterial({ color: 0xF47B20, wireframe: true, transparent: true, opacity: 0.045 })
+        );
+        scene.add(ico);
+
+
+        /* ── Torus rings */
+        function mkTorus(r, t, ox, ry) {
+          var m = new THREE.Mesh(
+            new THREE.TorusGeometry(r, t, 4, 120),
+            new THREE.MeshBasicMaterial({ color: 0xF47B20, transparent: true, opacity: 0.06, blending: THREE.AdditiveBlending })
+          );
+          m.rotation.x = ox;
+          m.rotation.y = ry || 0;
+          scene.add(m);
+          return m;
+        }
+        var t1 = mkTorus(5.5, 0.018, 1.1, 0);
+        var t2 = mkTorus(3.8, 0.012, 0.5, 1.3);
+        var t3 = mkTorus(7,   0.010, 0.3, 0.8);
+
+        /* ── Star-field particles */
+        var pCount = isMob ? 1000 : 2500;
+        var pPos   = new Float32Array(pCount * 3);
+        for (var i = 0; i < pCount; i++) {
+          pPos[i * 3]     = (Math.random() - 0.5) * 55;
+          pPos[i * 3 + 1] = (Math.random() - 0.5) * 38;
+          pPos[i * 3 + 2] = (Math.random() - 0.5) * 28 - 4;
+        }
+        var pGeo = new THREE.BufferGeometry();
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+        var pts = new THREE.Points(pGeo, new THREE.PointsMaterial({
+          color: 0xF47B20, size: 0.032, transparent: true, opacity: 0.40,
+          blending: THREE.AdditiveBlending, depthWrite: false
+        }));
+        scene.add(pts);
+
+        /* ── Network nodes + connection lines */
+        var nodeCount = isMob ? 80 : 180;
+        var nodes = [];
+        for (var n = 0; n < nodeCount; n++) {
+          nodes.push([(Math.random() - 0.5) * 28, (Math.random() - 0.5) * 20, (Math.random() - 0.5) * 14]);
+        }
+        var lv = [];
+        for (var a = 0; a < nodeCount; a++) {
+          for (var b = a + 1; b < nodeCount; b++) {
+            var dx = nodes[a][0]-nodes[b][0], dy = nodes[a][1]-nodes[b][1], dz = nodes[a][2]-nodes[b][2];
+            if (dx*dx + dy*dy + dz*dz < 20) { lv.push(nodes[a][0],nodes[a][1],nodes[a][2], nodes[b][0],nodes[b][1],nodes[b][2]); }
+          }
+        }
+        var lGeo = new THREE.BufferGeometry();
+        lGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lv), 3));
+        var lines = new THREE.LineSegments(lGeo,
+          new THREE.LineBasicMaterial({ color: 0xF47B20, transparent: true, opacity: 0.055, blending: THREE.AdditiveBlending })
+        );
+        scene.add(lines);
+
+        /* Node dot cloud */
+        var nPos = new Float32Array(nodeCount * 3);
+        nodes.forEach(function (nd, ii) { nPos[ii*3]=nd[0]; nPos[ii*3+1]=nd[1]; nPos[ii*3+2]=nd[2]; });
+        var nGeo = new THREE.BufferGeometry();
+        nGeo.setAttribute('position', new THREE.BufferAttribute(nPos, 3));
+        scene.add(new THREE.Points(nGeo, new THREE.PointsMaterial({
+          color: 0xFFD3A5, size: 0.06, transparent: true, opacity: 0.45,
+          blending: THREE.AdditiveBlending, depthWrite: false
+        })));
+
+        /* ── Click shockwave rings */
+        var waveRings = [];
+        hero.addEventListener('click', function (e) {
+          var r  = hero.getBoundingClientRect();
+          var nx = ((e.clientX - r.left) / W) * 2 - 1;
+          var ny = -((e.clientY - r.top)  / H) * 2 + 1;
+          var ray = new THREE.Raycaster();
+          var plane = new THREE.Plane(new THREE.Vector3(0,0,1), 0);
+          var hit = new THREE.Vector3();
+          ray.setFromCamera(new THREE.Vector2(nx, ny), camera);
+          ray.ray.intersectPlane(plane, hit);
+          var ring = new THREE.Mesh(
+            new THREE.TorusGeometry(0.1, 0.018, 4, 60),
+            new THREE.MeshBasicMaterial({ color: 0xF47B20, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending })
+          );
+          ring.position.copy(hit);
+          scene.add(ring);
+          waveRings.push({ mesh: ring, life: 1 });
+        });
+
+        /* ── Mouse parallax */
+        var mx = 0, my = 0, cx = 0, cy = 0;
+        window.addEventListener('mousemove', function (e) {
+          mx = (e.clientX / W - 0.5) * 3.5;
+          my = -(e.clientY / H - 0.5) * 2.5;
+        });
+
+        /* ── Scroll fade */
+        var scrollPct = 0;
+        window.addEventListener('scroll', function () {
+          scrollPct = Math.min(window.scrollY / (H || 800), 1);
+        }, { passive: true });
+
+        /* ── Resize */
+        window.addEventListener('resize', function () {
+          W = hero.offsetWidth; H = hero.offsetHeight;
+          camera.aspect = W / H;
+          camera.updateProjectionMatrix();
+          renderer.setSize(W, H);
+        });
+
+        /* ── Pause when off-screen */
+        var paused = false;
+        new IntersectionObserver(function (es) { paused = !es[0].isIntersecting; }, { threshold: 0 }).observe(hero);
+        document.addEventListener('visibilitychange', function () { paused = document.hidden; });
+
+        /* ── Animate */
+        var frame = 0;
+        function animate() {
+          requestAnimationFrame(animate);
+          if (paused) return;
+          frame++;
+          var t = frame * 0.004;
+
+          ico.rotation.x = t * 0.28; ico.rotation.y = t * 0.44;
+
+
+          t1.rotation.z = t * 0.38;
+          t2.rotation.y = t * 0.42;
+          t3.rotation.x = t * 0.22;
+          pts.rotation.y = t * 0.04;
+          lines.rotation.y = t * 0.04;
+
+          cx += (mx - cx) * 0.032;
+          cy += (my - cy) * 0.032;
+          camera.position.x = cx;
+          camera.position.y = cy;
+          camera.lookAt(0, 0, 0);
+
+          /* Fade scene on scroll */
+          var fade = Math.max(0, 1 - scrollPct * 1.1);
+          scene.children.forEach(function (obj) {
+            if (obj.material) obj.material.opacity = (obj._baseOpacity || (obj._baseOpacity = obj.material.opacity)) * fade;
+          });
+
+          /* Advance shockwave rings */
+          for (var wi = waveRings.length - 1; wi >= 0; wi--) {
+            var wr = waveRings[wi];
+            wr.mesh.scale.addScalar(0.22);
+            wr.life -= 0.025;
+            wr.mesh.material.opacity = Math.max(0, wr.life * 0.8);
+            if (wr.life <= 0) { scene.remove(wr.mesh); waveRings.splice(wi, 1); }
+          }
+
+          renderer.render(scene, camera);
+        }
+        animate();
+        console.log('%c[Nexora] Three.js hero live \u2713', 'color:#F47B20;font-weight:bold');
+      }
+
+      if (isMob) {
+        /* Mobile: CSS gradient, no WebGL */
+        var c = document.getElementById('webgl');
+        if (c) c.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;background:radial-gradient(ellipse at 60% 40%,rgba(10,31,68,.9),rgba(6,13,31,1));';
+      } else {
+        initThree();
+      }
+    })();
+    </script>
+
+    <!-- Mobile/Tablet hero 3D particles — targets #webgl-m / #hero-m -->
+    <script is:inline>
+    (function () {
+      'use strict';
+
+      function initMobileThree() {
+        var canvas = document.getElementById('webgl-m');
+        var hero   = document.getElementById('hero-m');
+        if (!canvas || !hero || !window.THREE) return;
+        /* Only run when the mobile hero is actually shown */
+        if (getComputedStyle(hero).display === 'none') return;
+        if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+        var THREE = window.THREE;
+        var W = hero.offsetWidth  || window.innerWidth;
+        var H = hero.offsetHeight || window.innerHeight;
+
+        var scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x04080F, 0.022);
+
+        var camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 120);
+        camera.position.z = 16;
+
+        var renderer;
+        try {
+          renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
+        } catch (e) { return; }
+        renderer.setSize(W, H);
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+        renderer.setClearColor(0x000000, 0);
+
+        /* Wireframe icosahedron */
+        var ico = new THREE.Mesh(
+          new THREE.IcosahedronGeometry(9, 1),
+          new THREE.MeshBasicMaterial({ color: 0xF47B20, wireframe: true, transparent: true, opacity: 0.045 })
+        );
+        scene.add(ico);
+
+        /* Torus rings */
+        function mkTorus(r, t, ox, ry) {
+          var m = new THREE.Mesh(
+            new THREE.TorusGeometry(r, t, 4, 80),
+            new THREE.MeshBasicMaterial({ color: 0xF47B20, transparent: true, opacity: 0.06, blending: THREE.AdditiveBlending })
+          );
+          m.rotation.x = ox; m.rotation.y = ry || 0;
+          scene.add(m); return m;
+        }
+        var t1 = mkTorus(5.5, 0.018, 1.1, 0);
+        var t2 = mkTorus(3.8, 0.012, 0.5, 1.3);
+        var t3 = mkTorus(7.0, 0.010, 0.3, 0.8);
+
+        /* Star-field particles — light count for mobile perf */
+        var pCount = window.innerWidth < 600 ? 600 : 1000;
+        var pPos   = new Float32Array(pCount * 3);
+        for (var i = 0; i < pCount; i++) {
+          pPos[i * 3]     = (Math.random() - 0.5) * 55;
+          pPos[i * 3 + 1] = (Math.random() - 0.5) * 38;
+          pPos[i * 3 + 2] = (Math.random() - 0.5) * 28 - 4;
+        }
+        var pGeo = new THREE.BufferGeometry();
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+        var pts = new THREE.Points(pGeo, new THREE.PointsMaterial({
+          color: 0xF47B20, size: 0.04, transparent: true, opacity: 0.38,
+          blending: THREE.AdditiveBlending, depthWrite: false
+        }));
+        scene.add(pts);
+
+        /* Touch / click shockwave rings */
+        var waveRings = [];
+        hero.addEventListener('click', function (e) {
+          var r  = hero.getBoundingClientRect();
+          var nx = ((e.clientX - r.left) / W) * 2 - 1;
+          var ny = -((e.clientY - r.top)  / H) * 2 + 1;
+          var ray   = new THREE.Raycaster();
+          var plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+          var hit   = new THREE.Vector3();
+          ray.setFromCamera(new THREE.Vector2(nx, ny), camera);
+          ray.ray.intersectPlane(plane, hit);
+          var ring = new THREE.Mesh(
+            new THREE.TorusGeometry(0.1, 0.018, 4, 60),
+            new THREE.MeshBasicMaterial({ color: 0xF47B20, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending })
+          );
+          ring.position.copy(hit);
+          scene.add(ring);
+          waveRings.push({ mesh: ring, life: 1 });
+        });
+
+        /* Scroll fade */
+        var scrollPct = 0;
+        window.addEventListener('scroll', function () {
+          scrollPct = Math.min(window.scrollY / (H || 600), 1);
+        }, { passive: true });
+
+        /* Resize */
+        window.addEventListener('resize', function () {
+          W = hero.offsetWidth; H = hero.offsetHeight;
+          camera.aspect = W / H;
+          camera.updateProjectionMatrix();
+          renderer.setSize(W, H);
+        });
+
+        /* Pause when off-screen / tab hidden */
+        var paused = false;
+        new IntersectionObserver(function (es) { paused = !es[0].isIntersecting; }, { threshold: 0 }).observe(hero);
+        document.addEventListener('visibilitychange', function () { paused = document.hidden; });
+
+        /* Animation loop */
+        var frame = 0;
+        function animate() {
+          requestAnimationFrame(animate);
+          if (paused) return;
+          frame++;
+          var t = frame * 0.004;
+
+          ico.rotation.x = t * 0.28; ico.rotation.y = t * 0.44;
+          t1.rotation.z  = t * 0.38;
+          t2.rotation.y  = t * 0.42;
+          t3.rotation.x  = t * 0.22;
+          pts.rotation.y = t * 0.04;
+
+          /* Scroll-based opacity fade */
+          var fade = Math.max(0, 1 - scrollPct * 1.1);
+          scene.children.forEach(function (obj) {
+            if (obj.material) {
+              obj.material.opacity = (obj._baseOpacity || (obj._baseOpacity = obj.material.opacity)) * fade;
+            }
+          });
+
+          /* Advance shockwave rings */
+          for (var wi = waveRings.length - 1; wi >= 0; wi--) {
+            var wr = waveRings[wi];
+            wr.mesh.scale.addScalar(0.22);
+            wr.life -= 0.025;
+            wr.mesh.material.opacity = Math.max(0, wr.life * 0.8);
+            if (wr.life <= 0) { scene.remove(wr.mesh); waveRings.splice(wi, 1); }
+          }
+
+          renderer.render(scene, camera);
+        }
+        animate();
+        console.log('%c[Nexora] Mobile hero particles live \u2713', 'color:#F47B20;font-weight:bold');
+      }
+
+      /* Run after THREE is loaded and DOM is ready */
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMobileThree);
+      } else {
+        initMobileThree();
+      }
+    })();
+    </script>
+
+    <script>
+      import '../scripts/ui.js';
+    </script>
+
+    <!-- Theme toggle handler. Switches data-theme on <html>, persists in
+         localStorage so the user's choice sticks across visits. Also swaps
+         the hero refinery image to the light-bg variant when theme is light. -->
+    <script is:inline>
+      (function () {
+        function syncHeroImage() {
+          var img = document.querySelector('.hero-model');
+          if (!img) return;
+          var theme = document.documentElement.getAttribute('data-theme') || 'dark';
+          var nextSrc = theme === 'light' ? '/hero-refinery-light.png' : '/hero-refinery.png';
+          /* Avoid pointless re-fetch if already correct */
+          if (!img.src.endsWith(nextSrc)) img.src = nextSrc;
+        }
+        syncHeroImage();
+
+        var btn = document.getElementById('themeToggle');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+          var current = document.documentElement.getAttribute('data-theme') || 'dark';
+          var next = current === 'light' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', next);
+          try { localStorage.setItem('nexora-theme', next); } catch (e) {}
+          syncHeroImage();
+        });
+      })();
+    </script>
+
+  </body>
+</html>

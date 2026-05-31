@@ -1,0 +1,542 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - button "Back to top" [ref=e499] [cursor=pointer]: ↑
+  - main [ref=e3]:
+    - navigation [ref=e4]:
+      - link "Nexora Global Engineering Solutions home" [ref=e5] [cursor=pointer]:
+        - /url: "#hero"
+        - img "Nexora Global Engineering Solutions Pvt. Ltd." [ref=e6]
+      - list [ref=e7]:
+        - listitem [ref=e8]:
+          - link "About" [ref=e9] [cursor=pointer]:
+            - /url: "#about"
+        - listitem [ref=e10]:
+          - link "Services" [ref=e11] [cursor=pointer]:
+            - /url: "#services"
+        - listitem [ref=e12]:
+          - link "Industries" [ref=e13] [cursor=pointer]:
+            - /url: "#industries"
+        - listitem [ref=e14]:
+          - link "Projects" [ref=e15] [cursor=pointer]:
+            - /url: "#projects"
+        - listitem [ref=e16]:
+          - link "Why Us" [ref=e17] [cursor=pointer]:
+            - /url: "#why"
+        - listitem [ref=e18]:
+          - link "Contact" [ref=e19] [cursor=pointer]:
+            - /url: "#contact"
+    - generic [ref=e20]:
+      - generic:
+        - generic: N°01
+        - generic: EST · MMXXIV
+        - generic: MANGALURU · IND
+      - generic "Headquarters":
+        - generic: Headquarters
+        - generic: Mangaluru, India
+        - generic: Silicon Beach City
+      - generic [ref=e22]:
+        - generic [ref=e23]: Silicon Beach City · Global Standards
+        - heading "NEX O RA Global Engineering Solutions ." [level=1] [ref=e24]:
+          - generic [ref=e25]:
+            - text: NEX
+            - generic "O" [ref=e26]:
+              - img
+            - text: RA
+          - generic [ref=e27]:
+            - generic [ref=e28]: Global
+            - emphasis [ref=e29]: Engineering
+          - generic [ref=e30]: Solutions
+          - generic [ref=e31]: .
+        - paragraph [ref=e33]: Engineering the Future of Energy & Industry
+        - paragraph [ref=e34]:
+          - generic [ref=e35]: ↳
+          - text: Delivering Excellence in Plant Engineering & Design
+        - generic [ref=e36]:
+          - link "Our Services ↓" [ref=e37] [cursor=pointer]:
+            - /url: "#services"
+            - text: Our Services
+            - generic [ref=e38]: ↓
+          - link "Start a Conversation" [ref=e39] [cursor=pointer]:
+            - /url: "#contact"
+        - generic "Key engineering metrics" [ref=e40]:
+          - generic [ref=e41]:
+            - generic [ref=e42]:
+              - img [ref=e44]
+              - generic [ref=e47]:
+                - generic [ref=e48]: 15+
+                - generic [ref=e49]: Industries Served
+            - generic [ref=e50]:
+              - img [ref=e52]
+              - generic [ref=e55]:
+                - generic [ref=e56]: "2"
+                - generic [ref=e57]: Core Verticals
+            - generic [ref=e58]:
+              - img [ref=e60]
+              - generic [ref=e63]:
+                - generic [ref=e64]: 8+
+                - generic [ref=e65]: Engineering Disciplines
+            - generic [ref=e66]:
+              - img [ref=e68]
+              - generic [ref=e71]:
+                - generic [ref=e72]: 20+
+                - generic [ref=e73]: Years Core Experience
+            - generic [ref=e74]:
+              - img [ref=e76]
+              - generic [ref=e79]:
+                - generic [ref=e80]: 100%
+                - generic [ref=e81]: Global Standards
+      - generic [ref=e84]: Scroll to explore
+    - generic [ref=e87]:
+      - img "Engineering" [ref=e89]
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - generic [ref=e92]: 01 /
+          - text: Who We Are
+        - heading "Engineering Excellence Rooted in Silicon Beach City _" [level=2] [ref=e93]:
+          - text: Engineering Excellence Rooted in
+          - generic [ref=e94]:
+            - text: Silicon Beach City
+            - generic [ref=e95]: _
+        - paragraph [ref=e96]:
+          - strong [ref=e97]: Nexora Global Engineering Solutions Pvt. Ltd.
+          - text: is a specialized multidisciplinary engineering organization formed by experienced professionals with deep expertise in plant engineering across both
+          - emphasis [ref=e98]: offshore
+          - text: and
+          - emphasis [ref=e99]: onshore
+          - text: systems.
+        - paragraph [ref=e100]: With a strong foundation in coastal Karnataka — Silicon Beach City — we combine regional technical strength with global engineering practices to deliver high-quality, cost-efficient solutions across the full project lifecycle.
+        - generic [ref=e101]:
+          - generic [ref=e102]:
+            - heading "Vision" [level=4] [ref=e103]
+            - paragraph [ref=e104]: To become a globally trusted engineering partner delivering innovative and sustainable solutions.
+          - generic [ref=e105]:
+            - heading "Mission" [level=4] [ref=e106]
+            - paragraph [ref=e107]: High-quality, cost-efficient engineering services through technical excellence and collaboration.
+    - generic [ref=e109]:
+      - generic [ref=e110]:
+        - generic [ref=e111]:
+          - generic [ref=e112]:
+            - generic [ref=e113]: 02 /
+            - text: What We Do
+          - heading "Core Engineering Services _" [level=2] [ref=e114]:
+            - text: Core Engineering
+            - text: Services
+            - generic [ref=e116]: _
+        - paragraph [ref=e117]:
+          - text: Precision engineering across the full project lifecycle — from concept to commissioning.
+          - generic [ref=e118]: — 14 disciplines · 1 standard
+      - generic [ref=e119]:
+        - article [ref=e120]:
+          - button "01 Process":
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic: "01"
+              - generic: Process
+          - paragraph [ref=e121]: P&IDs, hydraulic calculations, line sizing, HAZOP study, feasibility study, material selections, equipment sizing & calculations, MR & TBE, and process optimization for industrial plants.
+        - article [ref=e122]:
+          - button "02 Mechanical Equipment":
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic: "02"
+              - generic: Mechanical Equipment
+          - paragraph [ref=e123]: Vessel calculations of static equipment and pressure vessels, material handling, support, and auxiliary systems.
+        - article [ref=e124]:
+          - button "03 HSE":
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic: "03"
+              - generic: HSE
+          - paragraph [ref=e125]: HAZOP and HAZID study, compliance and standards such as OSHA, OISD, and ISO for standard practices.
+        - article [ref=e126]:
+          - button "04 Piping":
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic: "04"
+              - generic: Piping
+          - paragraph [ref=e127]: 3D piping plot plan, conceptual study, layout, BOQs, isometrics, stress analysis, pipe support design, material specifications & as-builts.
+        - article [ref=e128]:
+          - button "05 Civil & Structural":
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic: "05"
+              - generic: Civil & Structural
+          - paragraph [ref=e129]: Racks, foundations, process structure, offshore platform design and analysis.
+        - article [ref=e130]:
+          - button "06 Electrical":
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic: "06"
+              - generic: Electrical
+          - paragraph [ref=e131]: SLDs, load list, HAC classifications, cable scheduling and routing layout of cables and cable trays with supports.
+        - article [ref=e132]:
+          - button "07 Instrumentation & Telecommunication":
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic: "07"
+              - generic: Instrumentation & Telecommunication
+          - paragraph [ref=e133]: Transmitters, control system, actuator selection, I/O schedule, loop drawing, and F&G system design.
+        - article [ref=e134]:
+          - button "08 Pipe Stress / Structural Analysis":
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic: "08"
+              - generic: Pipe Stress / Structural Analysis
+          - paragraph [ref=e135]: Static analysis, dynamic analysis, thermal, wind and seismic analysis. Pipe stress mark-ups for critical areas.
+    - generic [ref=e137]:
+      - generic [ref=e138]: FPSO & FLNG ◆
+      - generic [ref=e139]: Subsea Pipelines ◆
+      - generic [ref=e140]: Refineries ◆
+      - generic [ref=e141]: Petrochemical Plants ◆
+      - generic [ref=e142]: Pipe Stress Analysis ◆
+      - generic [ref=e143]: Plot Plans & Layouts ◆
+      - generic [ref=e144]: P&IDs · BOQs · Isometrics ◆
+      - generic [ref=e145]: ASME · AGES · SAES · API ◆
+      - generic [ref=e146]: Modular Skids ◆
+      - generic [ref=e147]: Brownfield Retrofits ◆
+      - generic [ref=e148]: Greenfield Design ◆
+      - generic [ref=e149]: Offshore Platforms ◆
+      - generic [ref=e150]: FPSO & FLNG ◆
+      - generic [ref=e151]: Subsea Pipelines ◆
+      - generic [ref=e152]: Refineries ◆
+      - generic [ref=e153]: Petrochemical Plants ◆
+      - generic [ref=e154]: Pipe Stress Analysis ◆
+      - generic [ref=e155]: Plot Plans & Layouts ◆
+      - generic [ref=e156]: P&IDs · BOQs · Isometrics ◆
+      - generic [ref=e157]: ASME · AGES · SAES · API ◆
+      - generic [ref=e158]: Modular Skids ◆
+      - generic [ref=e159]: Brownfield Retrofits ◆
+      - generic [ref=e160]: Greenfield Design ◆
+      - generic [ref=e161]: Offshore Platforms ◆
+    - generic [ref=e162]:
+      - generic [ref=e163]:
+        - generic [ref=e164]:
+          - generic [ref=e165]: 03 /
+          - text: Sectors We Serve
+        - heading "Two Core Verticals _" [level=2] [ref=e166]:
+          - text: Two Core
+          - text: Verticals
+          - generic [ref=e168]: _
+        - paragraph [ref=e169]: End-to-end engineering across the full energy and process value chain — covering both onshore plants and offshore systems.
+      - generic [ref=e170]:
+        - article [ref=e171]:
+          - generic [ref=e172]:
+            - generic [ref=e173]: "01"
+            - generic [ref=e175]: Vertical 01
+          - generic [ref=e176]:
+            - img [ref=e179]
+            - heading "Onshore" [level=3] [ref=e184]
+          - generic [ref=e185]:
+            - generic [ref=e186]:
+              - generic [ref=e187]: "10"
+              - generic [ref=e188]: Sub-verticals
+            - generic [ref=e190]:
+              - generic [ref=e191]: 100%
+              - generic [ref=e192]: In-house expertise
+          - paragraph [ref=e193]: Sectors served
+          - list [ref=e194]:
+            - listitem [ref=e195]: Oil & Gas
+            - listitem [ref=e197]: Food & Beverage
+            - listitem [ref=e199]: Petrochemical
+            - listitem [ref=e201]: Chemical
+            - listitem [ref=e203]: Pharma
+            - listitem [ref=e205]: Mining
+            - listitem [ref=e207]: Storage Terminals
+            - listitem [ref=e209]: Skid Packages
+            - listitem [ref=e211]: Power Sector
+            - listitem [ref=e213]: WTP / STP
+        - article [ref=e215]:
+          - generic [ref=e216]:
+            - generic [ref=e217]: "02"
+            - generic [ref=e219]: Vertical 02
+          - generic [ref=e220]:
+            - img [ref=e223]
+            - heading "Offshore" [level=3] [ref=e227]
+          - generic [ref=e228]:
+            - generic [ref=e229]:
+              - generic [ref=e230]: "5"
+              - generic [ref=e231]: Sub-verticals
+            - generic [ref=e233]:
+              - generic [ref=e234]: 100%
+              - generic [ref=e235]: In-house expertise
+          - paragraph [ref=e236]: Sectors served
+          - list [ref=e237]:
+            - listitem [ref=e238]: FPSO
+            - listitem [ref=e240]: FPU
+            - listitem [ref=e242]: FSO
+            - listitem [ref=e244]: Jack-up Rigs
+            - listitem [ref=e246]: Fixed Platforms
+    - generic [ref=e249]:
+      - generic [ref=e250]:
+        - generic [ref=e251]:
+          - generic [ref=e252]: 04 /
+          - text: Our Work
+        - heading "Projects & Capabilities _" [level=2] [ref=e253]:
+          - text: Projects & Capabilities
+          - generic [ref=e254]: _
+        - paragraph [ref=e255]: Delivering precision engineering across global projects — brownfield retrofits to greenfield developments.
+      - generic [ref=e256]:
+        - article [ref=e257]:
+          - button
+          - generic:
+            - generic: Offshore
+            - heading [level=3]: Offshore Platforms & FPSO Systems
+        - article [ref=e258]:
+          - button
+          - generic:
+            - generic: Onshore
+            - heading [level=3]: Processing Plants
+        - article [ref=e259]:
+          - button
+          - generic:
+            - generic: Modular
+            - heading [level=3]: Modular Skids
+        - article [ref=e260]:
+          - button
+          - generic:
+            - generic: Greenfield
+            - heading [level=3]: New Facility Design
+        - article [ref=e261]:
+          - button
+          - generic:
+            - generic: Brownfield
+            - heading [level=3]: Retrofit & Expansion
+    - generic [ref=e263]:
+      - text: NEXORA
+      - generic [ref=e264]:
+        - generic [ref=e265]:
+          - generic [ref=e266]: 05 /
+          - text: Why Choose Us
+        - heading "Built Different. Delivered Better. _" [level=2] [ref=e267]:
+          - text: Built Different.
+          - generic [ref=e269]:
+            - text: Delivered Better.
+            - generic [ref=e270]: _
+        - paragraph [ref=e271]: Engineering rooted in coastal Karnataka — combining regional technical strength with global engineering practices, delivering across both onshore and offshore systems.
+      - generic [ref=e272]:
+        - generic [ref=e273]:
+          - img [ref=e276]
+          - generic [ref=e280]:
+            - heading "Coastal Engineering Heritage" [level=4] [ref=e281]
+            - paragraph [ref=e282]: Engineers from coastal Karnataka are recognized globally — demonstrating exceptional expertise across all major engineering sectors.
+        - generic [ref=e283]:
+          - img [ref=e286]
+          - generic [ref=e291]:
+            - heading "Highly Skilled Technical Team" [level=4] [ref=e292]
+            - paragraph [ref=e293]: Domain expertise across process, structural, piping, EIT, analysis, and HSE disciplines.
+        - generic [ref=e294]:
+          - img [ref=e297]
+          - generic [ref=e300]:
+            - heading "Global Standards & Compliance" [level=4] [ref=e301]
+            - paragraph [ref=e302]: ASME, AGES, SAES, and API compliant deliverables produced using a range of industry-leading engineering tools.
+        - generic [ref=e303]:
+          - img [ref=e306]
+          - generic [ref=e309]:
+            - heading "Cost-Efficient Execution" [level=4] [ref=e310]
+            - paragraph [ref=e311]: Optimized project delivery that reduces overhead without compromising quality or safety.
+    - region "Have a project on the table? Let's engineer it together." [ref=e312]:
+      - generic [ref=e313]:
+        - generic [ref=e314]:
+          - generic [ref=e315]: Available · Q3 / Q4 2026
+          - heading "Have a project on the table? Let's engineer it together." [level=2] [ref=e317]:
+            - text: Have a project on the table?
+            - text: Let's engineer it together.
+          - paragraph [ref=e318]: Brief us in a single message — we'll come back with a clear next step within one working day.
+        - generic [ref=e319]:
+          - link "Start a Conversation →" [ref=e320] [cursor=pointer]:
+            - /url: "#contact"
+            - text: Start a Conversation
+            - generic [ref=e321]: →
+          - link "Explore Services" [ref=e322] [cursor=pointer]:
+            - /url: "#services"
+          - generic [ref=e323]:
+            - generic [ref=e324]:
+              - generic [ref=e325]: "0"
+              - generic [ref=e326]: Years core experience
+            - generic [ref=e327]:
+              - generic [ref=e328]: "0"
+              - generic [ref=e329]: Global standards
+    - generic [ref=e332]:
+      - generic [ref=e333]:
+        - generic [ref=e334]:
+          - generic [ref=e335]: 06 /
+          - text: Get In Touch
+        - heading "Let's Engineer Something Great _" [level=2] [ref=e336]:
+          - text: Let's Engineer
+          - generic [ref=e338]:
+            - text: Something Great
+            - generic [ref=e339]: _
+        - paragraph [ref=e340]: Whether you have a new project or want to explore how Nexora can support your engineering needs, we'd love to hear from you.
+        - generic [ref=e343]:
+          - strong [ref=e344]: Currently accepting
+          - text: new engineering contracts for Q3 / Q4 2026
+        - generic [ref=e345]:
+          - link "Open location in Google Maps" [ref=e346] [cursor=pointer]:
+            - /url: https://www.google.com/maps/place/Nexora+Engineering+Solutions+Pvt.+Ltd./@12.8584401,74.8396025,17z/data=!3m1!4b1!4m6!3m5!1s0x3ba35b31b3ca53c7:0x9b1379cf13069b82!8m2!3d12.8584401!4d74.8396025!16s%2Fg%2F11z6qmz3jc?hl=en
+            - img [ref=e349]
+            - generic [ref=e352]:
+              - heading "Location" [level=4] [ref=e353]
+              - paragraph [ref=e354]: Nexora Engineering Solutions Pvt. Ltd., Silicon Beach City, India
+              - generic [ref=e355]: Open in Google Maps →
+          - link "Email contact@nexoraglobales.com" [ref=e356] [cursor=pointer]:
+            - /url: mailto:contact@nexoraglobales.com
+            - img [ref=e359]
+            - generic [ref=e362]:
+              - heading "Email" [level=4] [ref=e363]
+              - paragraph [ref=e364]: contact@nexoraglobales.com
+          - link "Phone +91 97424 26161" [ref=e365] [cursor=pointer]:
+            - /url: tel:+919742426161
+            - img [ref=e368]
+            - generic [ref=e370]:
+              - heading "Phone" [level=4] [ref=e371]
+              - paragraph [ref=e372]: +91 97424 26161
+      - generic [ref=e373]:
+        - generic [ref=e374]:
+          - generic [ref=e375]:
+            - textbox "Full Name" [ref=e376]:
+              - /placeholder: " "
+            - generic: Full Name
+            - generic [ref=e377]: Please enter your name
+          - generic [ref=e378]:
+            - textbox "Email" [ref=e379]:
+              - /placeholder: " "
+            - generic: Email
+            - generic [ref=e380]: Please enter a valid email
+        - generic [ref=e381]:
+          - textbox "Company" [ref=e382]:
+            - /placeholder: " "
+          - generic: Company
+        - generic [ref=e384]:
+          - combobox "Service Interest" [ref=e385]:
+            - option "Process"
+            - option "Mechanical Equipment"
+            - option "HSE"
+            - option "Piping"
+            - option "Civil & Structural"
+            - option "Electrical"
+            - option "Instrumentation & Telecommunication"
+            - option "Pipe Stress / Structural Analysis"
+            - option "Other"
+          - generic: Service Interest
+          - generic [ref=e386]: Please choose a service
+        - generic [ref=e387]:
+          - textbox "Message" [ref=e388]:
+            - /placeholder: " "
+          - generic: Message
+          - generic [ref=e389]: Please tell us about your project
+        - button "Send Enquiry →" [ref=e390] [cursor=pointer]
+  - contentinfo [ref=e391]:
+    - generic [ref=e393]:
+      - generic [ref=e394]:
+        - link "Nexora Global Engineering Solutions" [ref=e395] [cursor=pointer]:
+          - /url: "#hero"
+          - img "Nexora Global Engineering Solutions Pvt. Ltd." [ref=e396]
+        - paragraph [ref=e397]: Engineering the Future of Energy & Industry
+        - paragraph [ref=e398]: Multidisciplinary plant engineering across onshore & offshore systems — rooted in Silicon Beach City.
+        - generic [ref=e399]:
+          - img [ref=e401]
+          - generic [ref=e404]: 12.8584° N
+          - generic [ref=e405]: /
+          - generic [ref=e406]: 74.8396° E
+      - generic [ref=e407]:
+        - heading "Navigate" [level=4] [ref=e408]
+        - list [ref=e409]:
+          - listitem [ref=e410]:
+            - link "↳ About" [ref=e411] [cursor=pointer]:
+              - /url: "#about"
+          - listitem [ref=e412]:
+            - link "↳ Services" [ref=e413] [cursor=pointer]:
+              - /url: "#services"
+          - listitem [ref=e414]:
+            - link "↳ Industries" [ref=e415] [cursor=pointer]:
+              - /url: "#industries"
+          - listitem [ref=e416]:
+            - link "↳ Projects" [ref=e417] [cursor=pointer]:
+              - /url: "#projects"
+          - listitem [ref=e418]:
+            - link "↳ Why Us" [ref=e419] [cursor=pointer]:
+              - /url: "#why"
+          - listitem [ref=e420]:
+            - link "↳ Contact" [ref=e421] [cursor=pointer]:
+              - /url: "#contact"
+      - generic [ref=e422]:
+        - heading "Services" [level=4] [ref=e423]
+        - list [ref=e424]:
+          - listitem [ref=e425]:
+            - link "↳ Process" [ref=e426] [cursor=pointer]:
+              - /url: "#services"
+          - listitem [ref=e427]:
+            - link "↳ Mechanical Equipment" [ref=e428] [cursor=pointer]:
+              - /url: "#services"
+          - listitem [ref=e429]:
+            - link "↳ HSE" [ref=e430] [cursor=pointer]:
+              - /url: "#services"
+          - listitem [ref=e431]:
+            - link "↳ Piping" [ref=e432] [cursor=pointer]:
+              - /url: "#services"
+          - listitem [ref=e433]:
+            - link "↳ Civil & Structural" [ref=e434] [cursor=pointer]:
+              - /url: "#services"
+          - listitem [ref=e435]:
+            - link "↳ Electrical" [ref=e436] [cursor=pointer]:
+              - /url: "#services"
+      - generic [ref=e437]:
+        - heading "Get In Touch" [level=4] [ref=e438]
+        - link "contact@nexoraglobales.com" [ref=e439] [cursor=pointer]:
+          - /url: mailto:contact@nexoraglobales.com
+          - img [ref=e441]
+          - generic [ref=e444]: contact@nexoraglobales.com
+        - link "+91 97424 26161" [ref=e445] [cursor=pointer]:
+          - /url: tel:+919742426161
+          - img [ref=e447]
+          - generic [ref=e449]: +91 97424 26161
+        - link "Silicon Beach City, India" [ref=e450] [cursor=pointer]:
+          - /url: https://www.google.com/maps/place/Nexora+Engineering+Solutions+Pvt.+Ltd./@12.8584401,74.8396025,17z/data=!3m1!4b1!4m6!3m5!1s0x3ba35b31b3ca53c7:0x9b1379cf13069b82!8m2!3d12.8584401!4d74.8396025!16s%2Fg%2F11z6qmz3jc?hl=en
+          - img [ref=e452]
+          - generic [ref=e455]: Silicon Beach City, India
+        - generic [ref=e456]:
+          - generic [ref=e457]:
+            - generic [ref=e458]: Status
+            - generic [ref=e459]: Open · accepting briefs
+          - generic [ref=e461]:
+            - generic [ref=e462]: Local time
+            - generic [ref=e463]:
+              - generic [ref=e464]: 18:24
+              - text: IST
+    - generic [ref=e466]:
+      - generic [ref=e467]: © 2026 Nexora Global Engineering Solutions Pvt. Ltd.. All rights reserved.
+      - generic [ref=e468]:
+        - generic [ref=e469]: Engineered with care in Mangaluru
+        - generic [ref=e470]: ◆
+        - generic [ref=e471]: Crafted by people, not algorithms
+  - generic [ref=e474]:
+    - button "Menu" [ref=e475]:
+      - img [ref=e477]
+      - generic: Menu
+    - button "Inspect" [ref=e481]:
+      - img [ref=e483]
+      - generic: Inspect
+    - button "Audit" [ref=e485]:
+      - generic [ref=e486]:
+        - img [ref=e487]
+        - img [ref=e504]
+      - generic: Audit
+    - button "Settings" [ref=e493]:
+      - img [ref=e495]
+      - generic: Settings

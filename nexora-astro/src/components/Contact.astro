@@ -1,0 +1,90 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site.js';
+import { services } from '../data/services.js';
+---
+<section id="contact">
+  <div class="con-grid">
+    <div>
+      <div class="s-label rv"><span class="sec-num">06 /</span> Get In Touch</div>
+      <h2 class="s-title rv">
+        Let's Engineer<br />
+        <span style="color:var(--g)">Something Great</span>
+      </h2>
+      <p class="s-desc rv">
+        Whether you have a new project or want to explore how Nexora can support your engineering
+        needs, we'd love to hear from you.
+      </p>
+      <div class="con-availability rv" style="transition-delay:.05s">
+        <span class="ca-dot"></span>
+        <span><strong>Currently accepting</strong> new engineering contracts for Q3 / Q4 2026</span>
+      </div>
+      <div class="con-items">
+        <a class="con-item rv" href={site.contact.mapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Open location in Google Maps">
+          <div class="con-ico"><Icon name="pin" size={16} /></div>
+          <div>
+            <h4>Location</h4>
+            <p>{site.contact.locationFull}</p>
+            <span class="con-link">Open in Google Maps →</span>
+          </div>
+        </a>
+        <a class="con-item rv" href={`mailto:${site.contact.email}`} style="transition-delay:.1s">
+          <div class="con-ico"><Icon name="mail" size={16} /></div>
+          <div>
+            <h4>Email</h4>
+            <p>{site.contact.email}</p>
+          </div>
+        </a>
+        <a class="con-item rv" href={`tel:${site.contact.phoneTel}`} style="transition-delay:.15s">
+          <div class="con-ico"><Icon name="phone" size={16} /></div>
+          <div>
+            <h4>Phone</h4>
+            <p>{site.contact.phone}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <form class="form-wrap rvr" id="enqForm" novalidate>
+      <div class="form-row">
+        <div class="fg">
+          <input type="text"  id="fName"  placeholder=" " required />
+          <label for="fName">What do we call you?</label>
+          <span class="err">We need a name to write back to</span>
+        </div>
+        <div class="fg">
+          <input type="email" id="fEmail" placeholder="e.g. name@company.com" required />
+          <label for="fEmail">Where do we follow up?</label>
+          <span class="err">That email doesn't look right</span>
+        </div>
+      </div>
+      <div class="fg">
+        <input type="text" id="fCompany" placeholder="Your Company Name" />
+        <label for="fCompany">Who do you represent?</label>
+        <span class="err"></span>
+      </div>
+      <div class="fg">
+        <select id="fService" required>
+          <option value="" disabled selected hidden></option>
+          {services.map((s) => <option>{s.title}</option>)}
+          <option>Other</option>
+        </select>
+        <label for="fService">What's the engineering challenge?</label>
+        <span class="err">Pick a discipline so we route you right</span>
+      </div>
+      <div class="fg">
+        <textarea id="fMsg" placeholder=" " required></textarea>
+        <label for="fMsg">Tell us your project story</label>
+        <span class="err">A few lines about the project, please</span>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-p"
+        style="width:100%;justify-content:center"
+        id="submitBtn"
+      >
+        Send Enquiry →
+      </button>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,429 @@
+---
+import { site } from '../data/site.js';
+import { heroStats } from '../data/why.js';
+---
+
+<section id="hero-m" aria-label="Hero">
+
+  <!-- 3D WebGL particles (same Three.js scene as desktop, lighter config) -->
+  <canvas id="webgl-m" aria-hidden="true"></canvas>
+
+  <!-- Ambient background glows (sits above canvas, below content) -->
+  <div class="hm-bg" aria-hidden="true"></div>
+
+  <!-- Headquarters block — top-right corner -->
+  <div class="hm-loc" aria-label="Headquarters">
+    <div class="hm-loc-label">Headquarters</div>
+    <div class="hm-loc-place">Mangaluru, India</div>
+    <div class="hm-loc-region">Silicon Beach City</div>
+  </div>
+
+  <div class="hm-content">
+
+    <!-- Badge -->
+    <div class="hm-badge">
+      <span class="hm-dot" aria-hidden="true"></span>
+      {site.badge}
+    </div>
+
+    <!-- Title -->
+    <h1 class="hm-title">
+      <span class="hm-nexora">NEXORA</span>
+      <span class="hm-sub-row">
+        <em class="hm-em">Engineering</em> <span class="hm-word">Solutions</span>
+      </span>
+    </h1>
+
+    <!-- Accent underline -->
+    <div class="hm-line" aria-hidden="true"></div>
+
+    <!-- Tagline -->
+    <p class="hm-tagline"><strong>{site.tagline}</strong></p>
+    <p class="hm-micro">
+      <span class="hm-arrow" aria-hidden="true">↳</span>
+      {site.micro}
+    </p>
+
+    <!-- CTAs -->
+    <div class="hm-btns">
+      <a href="#services" class="btn btn-p">Our Services <span class="btn-arrow">↓</span></a>
+      <a href="#contact"  class="btn btn-o">Start a Conversation</a>
+    </div>
+
+    <!-- Stats -->
+    <div class="hm-stats" aria-label="Key engineering metrics">
+      {heroStats.map((s) => (
+        <div class="hm-stat">
+          <div class="hm-stat-ico" set:html={s.icon} aria-hidden="true"></div>
+          <div class="hm-stat-body">
+            <div class="hm-stat-n stat-n"
+                 data-val={s.value}
+                 data-suffix={s.suffix}>0</div>
+            <div class="hm-stat-l">{s.label}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<!-- Scale "Engineering Solutions" horizontally to match NEXORA's exact pixel width -->
+<script is:inline>
+(function () {
+  function matchTitleWidth() {
+    var nexora = document.querySelector('#hero-m .hm-nexora');
+    var row    = document.querySelector('#hero-m .hm-sub-row');
+    if (!nexora || !row) return;
+
+    /* Reset any previous transform so measurements are of natural widths */
+    row.style.transform = '';
+
+    /* Measure NEXORA's natural text pixel width (temporarily inline) */
+    nexora.style.display = 'inline-block';
+    var nW = nexora.getBoundingClientRect().width;
+    nexora.style.display = '';
+
+    /* Measure subtitle's natural text pixel width (temporarily inline) */
+    row.style.display = 'inline-block';
+    var rW = row.getBoundingClientRect().width;
+    row.style.display = '';
+
+    if (rW <= 0 || nW <= 0) return;
+
+    /* Scale subtitle horizontally from its left edge to fill exactly nW */
+    row.style.transformOrigin = 'left center';
+    row.style.transform = 'scaleX(' + (nW / rW).toFixed(6) + ')';
+  }
+
+  document.fonts.ready.then(function () {
+    matchTitleWidth();
+    window.addEventListener('resize', matchTitleWidth, { passive: true });
+  });
+})();
+</script>
+
+<style>
+  /* ── Layout ──────────────────────────────────────────────────────── */
+  #hero-m {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 90px var(--pad-x, 5%) 60px;
+    /* var(--blue) = #060D1F in dark theme, #FAF7F2 in light theme */
+    background: var(--blue);
+    overflow: hidden;
+    isolation: isolate;
+    /* Smooth theme transition */
+    transition: background-color .35s ease;
+  }
+
+  /* ── 3D canvas ───────────────────────────────────────────────────── */
+  #webgl-m {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    display: block;
+  }
+
+  /* ── Ambient glow ────────────────────────────────────────────────── */
+  .hm-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(65% 50% at 85% 15%, rgba(244, 123, 32, .13) 0%, transparent 60%),
+      radial-gradient(45% 35% at 5%  80%, rgba(33, 150, 243, .09) 0%, transparent 55%),
+      radial-gradient(50% 40% at 50% 105%, rgba(244, 123, 32, .10) 0%, transparent 65%);
+  }
+
+  /* Light theme: softer, warmer glows on cream bg */
+  :global([data-theme="light"]) .hm-bg {
+    background:
+      radial-gradient(65% 50% at 85% 15%, rgba(216, 104, 16, .14) 0%, transparent 60%),
+      radial-gradient(45% 35% at 5%  80%, rgba(33, 150, 243, .07) 0%, transparent 55%),
+      radial-gradient(50% 40% at 50% 105%, rgba(216, 104, 16, .10) 0%, transparent 65%);
+  }
+
+  /* ── Headquarters block (top-right) ─────────────────────────────── */
+  .hm-loc {
+    position: absolute;
+    top: 4.8rem;
+    right: var(--pad-x, 5%);
+    z-index: 2;
+    text-align: right;
+    font-family: var(--hg, sans-serif);
+    pointer-events: none;
+    border-right: 2px solid rgba(244, 123, 32, .40);
+    padding: .18rem 1.1rem .18rem 0;
+  }
+
+  .hm-loc-label {
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: var(--g, #F47B20);
+    margin-bottom: .28rem;
+  }
+
+  .hm-loc-place {
+    font-family: var(--hd, sans-serif);
+    font-size: 1.32rem;
+    font-weight: 600;
+    letter-spacing: .03em;
+    color: var(--white);
+    line-height: 1.1;
+  }
+
+  .hm-loc-region {
+    font-size: .82rem;
+    font-weight: 500;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: .25rem;
+  }
+
+  /* On very small phones hide it to avoid overlapping the title */
+  @media (max-width: 400px) {
+    .hm-loc { display: none; }
+  }
+
+  /* Light theme overrides */
+  :global([data-theme="light"]) .hm-loc {
+    border-right-color: rgba(216, 104, 16, .45);
+  }
+  :global([data-theme="light"]) .hm-loc-place {
+    color: var(--white);
+  }
+
+  /* ── Content wrapper ─────────────────────────────────────────────── */
+  .hm-content {
+    position: relative;
+    z-index: 2;
+    max-width: min(600px, 100%);
+  }
+
+  /* ── Badge ───────────────────────────────────────────────────────── */
+  .hm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: rgba(244, 123, 32, .08);
+    border: 1px solid rgba(244, 123, 32, .32);
+    color: var(--g, #F47B20);
+    font-family: var(--hg, sans-serif);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    padding: .32rem .85rem .32rem .5rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hm-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--g, #F47B20);
+    box-shadow: 0 0 10px rgba(244, 123, 32, .7);
+    flex-shrink: 0;
+    animation: hmDotPulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes hmDotPulse {
+    0%, 100% { opacity: 1;  box-shadow: 0 0 10px rgba(244,123,32,.7); }
+    50%       { opacity: .45; box-shadow: 0 0  4px rgba(244,123,32,.3); }
+  }
+
+  /* ── Title ───────────────────────────────────────────────────────── */
+  .hm-title {
+    font-family: var(--hd, sans-serif);
+    font-weight: 800;
+    text-transform: uppercase;
+    /* var(--white) = #F0F4F8 dark theme, #1A1410 light theme */
+    color: var(--white);
+    margin: 0 0 .9rem;
+    line-height: 1;
+  }
+
+  .hm-nexora {
+    display: block;
+    font-size: clamp(3.6rem, 15vw, 7rem);
+    line-height: 1;
+    letter-spacing: .05em;
+    margin-bottom: .28em;
+    text-shadow:
+      0 0 40px rgba(244, 123, 32, .22),
+      0 0 90px rgba(244, 123, 32, .10),
+      2px 2px 0 rgba(244, 123, 32, .18);
+  }
+
+  :global([data-theme="light"]) .hm-nexora {
+    text-shadow:
+      0 0 30px rgba(216, 104, 16, .18),
+      2px 2px 0 rgba(216, 104, 16, .12);
+  }
+
+  .hm-sub-row {
+    display: block;
+    font-size: clamp(1rem, 3.2vw, 1.7rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: .02em;
+    margin-bottom: .1em;
+  }
+
+  .hm-em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--g, #F47B20);
+    letter-spacing: -.01em;
+  }
+
+  /* Light theme: use darker orange for "Engineering" italic */
+  :global([data-theme="light"]) .hm-em {
+    color: #8C3D08;
+  }
+
+  .hm-solutions {
+    margin-top: .05em;
+  }
+
+  /* ── Accent line ─────────────────────────────────────────────────── */
+  .hm-line {
+    width: 110px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--g, #F47B20) 0%, #ffffff 50%, var(--b, #2196F3) 100%);
+    border-radius: 3px;
+    box-shadow: 0 0 16px rgba(244, 123, 32, .4);
+    margin: 1.1rem 0 1.5rem;
+  }
+
+  /* ── Tagline ─────────────────────────────────────────────────────── */
+  .hm-tagline {
+    font-family: var(--hg, sans-serif);
+    font-size: clamp(.88rem, 2.6vw, 1.05rem);
+    color: var(--white);
+    letter-spacing: .04em;
+    margin-bottom: .35rem;
+    font-weight: 500;
+  }
+
+  .hm-micro {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    font-family: var(--hg, sans-serif);
+    font-size: .8rem;
+    color: var(--dim);
+    margin-bottom: 1.8rem;
+  }
+
+  .hm-arrow { color: var(--g, #F47B20); }
+
+  /* ── CTA buttons ─────────────────────────────────────────────────── */
+  .hm-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+    margin-bottom: 2.2rem;
+  }
+
+  /* ── Stats grid ──────────────────────────────────────────────────── */
+  .hm-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .75rem 1rem;
+    background: rgba(255, 255, 255, .04);
+    border: 1px solid rgba(244, 123, 32, .14);
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem;
+  }
+
+  :global([data-theme="light"]) .hm-stats {
+    background: rgba(0, 0, 0, .04);
+    border-color: rgba(216, 104, 16, .2);
+  }
+
+  .hm-stat {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+  }
+
+  .hm-stat-ico {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: var(--g, #F47B20);
+    opacity: .85;
+  }
+
+  :global([data-theme="light"]) .hm-stat-ico {
+    color: #8C3D08;
+  }
+
+  .hm-stat-ico :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hm-stat-n {
+    font-family: var(--hd, sans-serif);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .hm-stat-l {
+    font-family: var(--hg, sans-serif);
+    font-size: .58rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: .2rem;
+  }
+
+  /* ── Responsive tweaks ───────────────────────────────────────────── */
+  @media (max-width: 480px) {
+    #hero-m {
+      padding: 80px var(--pad-x, 5%) 50px;
+    }
+    .hm-stats {
+      grid-template-columns: 1fr 1fr;
+      gap: .6rem .8rem;
+    }
+  }
+
+  @media (min-width: 601px) {
+    .hm-stats {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 901px) {
+    #hero-m {
+      padding: 95px var(--pad-x, 5%) 65px;
+    }
+    .hm-nexora {
+      font-size: clamp(4.5rem, 9vw, 7rem);
+    }
+    .hm-sub-row {
+      font-size: clamp(1.2rem, 2.2vw, 1.9rem);
+    }
+    .hm-stats {
+      grid-template-columns: repeat(5, 1fr);
+      max-width: 680px;
+    }
+  }
+</style>

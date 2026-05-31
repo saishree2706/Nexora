@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nexora Global Engineering Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#060D1F;--deep:#0A1F44;--steel:#4A4F55;
+  --g:#F47B20;--gd:#C75A0F;--glow:rgba(244,123,32,0.45);
+  --b:#2196F3;--bglow:rgba(33,150,243,0.4);--silver:#B0BEC5;
+  --white:#F0F4F8;--dim:rgba(240,244,248,0.65);--faint:rgba(240,244,248,0.35);
+  --hd:'Oswald',sans-serif;--hg:'Rajdhani',sans-serif;--bd:'DM Sans',sans-serif;
+}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto !important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
+.lenis.lenis-smooth iframe{pointer-events:none}
+body{background:var(--blue);color:var(--white);font-family:var(--bd);overflow-x:hidden;cursor:none}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--blue)}::-webkit-scrollbar-thumb{background:var(--g)}
+
+/* ══ SCROLL PROGRESS ══ */
+.scroll-progress{position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--b),var(--g));z-index:1100;transform-origin:left center;transform:scaleX(0);box-shadow:0 0 12px rgba(244,123,32,.5),0 0 20px rgba(33,150,243,.35);pointer-events:none}
+
+/* ══ LOADER ══ */
+#loader{position:fixed;inset:0;z-index:9999;background:var(--blue);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity 1s ease,visibility 1s ease}
+#loader.out{opacity:0;visibility:hidden}
+.loader-logo img{display:block;height:78px;width:auto;filter:drop-shadow(0 0 30px rgba(244,123,32,.35)) drop-shadow(0 0 18px rgba(33,150,243,.25));animation:logoPulse 3s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 30px rgba(244,123,32,.35)) drop-shadow(0 0 18px rgba(33,150,243,.25))}50%{filter:drop-shadow(0 0 42px rgba(244,123,32,.55)) drop-shadow(0 0 26px rgba(33,150,243,.4))}}
+.loader-bar-wrap{width:200px;height:2px;background:rgba(255,255,255,0.1);border-radius:1px;overflow:hidden}
+.loader-bar{height:100%;background:linear-gradient(90deg,var(--b),var(--g));border-radius:1px;animation:loadFill 1.4s ease forwards}
+@keyframes loadFill{from{width:0}to{width:100%}}
+.loader-text{font-family:var(--hg);font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:var(--faint)}
+
+/* ══ BRAND LOGO ══ */
+.brand{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;line-height:1}
+.brand img{display:block;width:auto;height:36px;transition:transform .3s,filter .3s}
+.brand:hover img{transform:scale(1.04);filter:drop-shadow(0 0 14px rgba(244,123,32,.45))}
+
+/* ══ CURSOR ══ */
+.c-dot{position:fixed;top:0;left:0;width:8px;height:8px;margin-left:-4px;margin-top:-4px;background:var(--g);border-radius:50%;pointer-events:none;z-index:8888;transition:width .25s,height .25s,margin .25s,background .25s;mix-blend-mode:screen;will-change:transform}
+.c-ring{position:fixed;top:0;left:0;width:36px;height:36px;margin-left:-18px;margin-top:-18px;border:1.5px solid rgba(244,123,32,.55);border-radius:50%;pointer-events:none;z-index:8887;transition:width .35s,height .35s,margin .35s,opacity .3s,border-color .3s;will-change:transform}
+body.hovering .c-dot{width:14px;height:14px;margin-left:-7px;margin-top:-7px}
+body.hovering .c-ring{width:54px;height:54px;margin-left:-27px;margin-top:-27px;border-color:rgba(244,123,32,.85)}
+
+/* ══ NAV ══ */
+nav{position:fixed;top:0;width:100%;z-index:1000;height:72px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(6,13,31,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(244,123,32,.12);transition:background .3s}
+.logo{display:inline-flex;align-items:center;text-decoration:none}
+.logo img{height:42px;width:auto;display:block}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{font-family:var(--hg);font-size:.9rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:var(--g);transition:width .25s}
+.nav-links a:hover{color:var(--g)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{background:var(--g)!important;color:var(--blue)!important;padding:.45rem 1.3rem!important;font-weight:700!important;transition:background .2s,transform .2s,box-shadow .2s!important}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{background:#D86B12!important;transform:translateY(-2px)!important;box-shadow:0 8px 24px rgba(244,123,32,.35)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--white);transition:.3s}
+
+/* ══ HERO ══ */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding:100px 5% 60px}
+#webgl{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero-noise{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.6}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(6,13,31,.7) 100%);z-index:1;pointer-events:none}
+.hero-content{position:relative;z-index:2;max-width:820px}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(244,123,32,.1);border:1px solid rgba(244,123,32,.3);color:var(--g);font-family:var(--hg);font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:.35rem 1rem;margin-bottom:2rem;animation:fadeUp .9s .2s both}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--g);animation:blink 1.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero-title{font-family:var(--hd);font-size:clamp(2.8rem,6.5vw,6rem);font-weight:700;text-transform:uppercase;line-height:1.0;letter-spacing:.02em;color:var(--white);margin-bottom:1.5rem;animation:fadeUp .9s .35s both;
+  text-shadow:0 0 80px rgba(244,123,32,.15),2px 2px 0 rgba(244,123,32,.12),4px 4px 0 rgba(244,123,32,.07),6px 6px 0 rgba(244,123,32,.04)}
+.hero-title .g{color:var(--g);filter:drop-shadow(0 0 20px rgba(244,123,32,.5))}
+.hero-sub{font-family:var(--hg);font-size:clamp(.95rem,1.8vw,1.25rem);color:var(--dim);letter-spacing:.06em;margin-bottom:.6rem;animation:fadeUp .9s .45s both}
+.hero-micro{font-size:.88rem;color:var(--faint);margin-bottom:2.5rem;animation:fadeUp .9s .52s both}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .9s .6s both}
+.btn{font-family:var(--hg);font-size:.92rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 2.2rem;border-radius:2px;text-decoration:none;border:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .3s ease;position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.08);transform:translateX(-100%);transition:transform .3s}
+.btn:hover::after{transform:translateX(0)}
+.btn-p{background:var(--g);color:var(--blue)}
+.btn-p:hover{background:#D86B12;box-shadow:0 10px 30px rgba(244,123,32,.4);transform:translateY(-3px)}
+.btn-o{background:transparent;color:var(--white);border:1px solid rgba(240,244,248,.25)}
+.btn-o:hover{border-color:var(--g);color:var(--g);transform:translateY(-3px)}
+.hero-stats{position:absolute;bottom:2.4rem;right:5%;left:5%;z-index:2;display:flex;justify-content:flex-end;gap:2.2rem;flex-wrap:wrap;animation:fadeUp .9s .8s both}
+.stat-item{text-align:center;min-width:88px}
+.stat-n{font-family:var(--hd);font-size:1.9rem;font-weight:700;color:var(--g);text-shadow:0 0 20px var(--glow);line-height:1}
+.stat-l{font-size:.66rem;color:var(--faint);letter-spacing:.14em;text-transform:uppercase;margin-top:6px;line-height:1.35}
+.scroll-ind{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--hg);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);animation:fadeUp 1s 1.2s both}
+.scroll-line{width:1px;height:52px;background:linear-gradient(to bottom,var(--g),transparent);animation:scrollAnim 1.6s ease-in-out infinite}
+@keyframes scrollAnim{0%,100%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ COMMON ══ */
+section{padding:110px 5%;position:relative;overflow:hidden}
+.s-label{font-family:var(--hg);font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--g);display:flex;align-items:center;gap:.6rem;margin-bottom:.9rem}
+.s-label::before{content:'';width:28px;height:1.5px;background:var(--g);box-shadow:0 0 8px var(--glow)}
+.s-title{font-family:var(--hd);font-size:clamp(2rem,4vw,3.4rem);font-weight:700;text-transform:uppercase;letter-spacing:.03em;line-height:1.05;color:var(--white);margin-bottom:1.2rem}
+.s-desc{font-size:.97rem;color:var(--dim);max-width:560px;line-height:1.8}
+.divider{width:100%;height:1px;background:linear-gradient(to right,transparent,rgba(244,123,32,.25),transparent)}
+
+/* reveal */
+.rv{opacity:0;transform:perspective(800px) rotateX(12deg) translateY(35px);transition:opacity .8s ease,transform .8s ease}
+.rv.on{opacity:1;transform:perspective(800px) rotateX(0deg) translateY(0)}
+.rvl{opacity:0;transform:perspective(800px) rotateY(-15deg) translateX(-35px);transition:opacity .8s ease,transform .8s ease}
+.rvl.on{opacity:1;transform:perspective(800px) rotateY(0) translateX(0)}
+.rvr{opacity:0;transform:perspective(800px) rotateY(15deg) translateX(35px);transition:opacity .8s ease,transform .8s ease}
+.rvr.on{opacity:1;transform:perspective(800px) rotateY(0) translateX(0)}
+
+/* floating geometry */
+.geo{position:absolute;pointer-events:none;transform-style:preserve-3d}
+.geo-face{position:absolute;border:1px solid rgba(244,123,32,.06)}
+
+/* ══ ABOUT ══ */
+#about{background:linear-gradient(135deg,var(--deep) 0%,#081830 100%)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-img-wrap{position:relative;aspect-ratio:4/3;border-radius:3px;overflow:hidden}
+.about-img-wrap img{width:100%;height:100%;object-fit:cover;filter:brightness(.65) saturate(.75);transition:transform .6s,filter .6s}
+.about-img-wrap:hover img{transform:scale(1.04);filter:brightness(.8) saturate(.9)}
+.about-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,31,68,.35),transparent);pointer-events:none}
+.corner-tl{position:absolute;top:-10px;left:-10px;width:55%;height:55%;border-top:2px solid var(--g);border-left:2px solid var(--g);pointer-events:none;box-shadow:-2px -2px 12px rgba(244,123,32,.2)}
+.corner-br{position:absolute;bottom:-10px;right:-10px;width:40%;height:40%;border-bottom:1.5px solid rgba(244,123,32,.35);border-right:1.5px solid rgba(244,123,32,.35);pointer-events:none}
+.vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.vm-card{background:rgba(6,13,31,.7);border:1px solid rgba(244,123,32,.12);border-top:2px solid var(--g);padding:1.5rem;border-radius:2px;transform-style:preserve-3d;will-change:transform}
+.vm-card h4{font-family:var(--hg);font-size:.75rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--g);margin-bottom:.5rem}
+.vm-card p{font-size:.86rem;color:var(--dim);line-height:1.65}
+
+/* ══ SERVICES ══ */
+#services{background:var(--blue)}
+.svc-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;flex-wrap:wrap;gap:1.5rem}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:1px;background:rgba(74,79,85,.12)}
+.svc-card{background:var(--blue);padding:2.6rem 2rem;position:relative;overflow:hidden;transform-style:preserve-3d;will-change:transform;transition:background .3s}
+.svc-card::before{content:'';position:absolute;bottom:0;left:0;width:100%;height:2.5px;background:var(--g);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;box-shadow:0 0 12px var(--glow)}
+.svc-card:hover{background:rgba(10,31,68,.95)}
+.svc-card:hover::before{transform:scaleX(1)}
+.svc-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(244,123,32,.04),transparent 70%);opacity:0;transition:opacity .4s}
+.svc-card:hover::after{opacity:1}
+.svc-ico{font-size:2.4rem;display:block;margin-bottom:1.3rem;filter:drop-shadow(0 0 8px rgba(244,123,32,.3))}
+.svc-card h3{font-family:var(--hg);font-size:1.15rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--white);margin-bottom:.65rem}
+.svc-card p{font-size:.86rem;color:var(--dim);line-height:1.72}
+.svc-n{position:absolute;top:1.5rem;right:1.5rem;font-family:var(--hd);font-size:3.5rem;font-weight:700;color:rgba(244,123,32,.05);line-height:1;pointer-events:none}
+.svc-shine{position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(244,123,32,.04),transparent);transition:left .5s ease;pointer-events:none}
+.svc-card:hover .svc-shine{left:150%}
+
+/* ══ VERTICALS / SECTORS ══ */
+#industries{background:linear-gradient(180deg,#081830,var(--blue))}
+.vert-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;flex-wrap:wrap;gap:1.5rem}
+.vert-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1rem}
+.vert-card{position:relative;background:rgba(6,13,31,.55);border:1px solid rgba(244,123,32,.14);border-top:3px solid var(--g);border-radius:3px;padding:2.6rem 2.2rem;overflow:hidden;transform-style:preserve-3d;will-change:transform;transition:background .3s,box-shadow .3s,border-color .3s}
+.vert-card:hover{background:rgba(10,31,68,.85);border-color:rgba(244,123,32,.35);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 30px rgba(244,123,32,.08)}
+.vert-card::before{content:attr(data-num);position:absolute;top:1rem;right:1.4rem;font-family:var(--hd);font-size:5rem;font-weight:700;color:rgba(244,123,32,.06);line-height:1;pointer-events:none}
+.vert-card .vert-ico{font-size:2rem;display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border:1px solid rgba(244,123,32,.25);border-radius:50%;background:rgba(244,123,32,.06);margin-bottom:1.3rem;filter:drop-shadow(0 0 8px rgba(244,123,32,.3))}
+.vert-card h3{font-family:var(--hd);font-size:1.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:.4rem}
+.vert-card .vert-sub{font-family:var(--hg);font-size:.78rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--g);margin-bottom:1.4rem}
+.vert-tags{display:flex;flex-wrap:wrap;gap:.55rem}
+.vert-tags span{font-family:var(--hg);font-size:.78rem;font-weight:600;letter-spacing:.06em;color:var(--dim);background:rgba(244,123,32,.05);border:1px solid rgba(244,123,32,.18);padding:.5rem .9rem;border-radius:2px;transition:background .25s,color .25s,border-color .25s,transform .25s}
+.vert-tags span:hover{background:rgba(244,123,32,.14);color:var(--white);border-color:rgba(244,123,32,.5);transform:translateY(-2px)}
+
+/* ══ PROJECTS ══ */
+#projects{background:var(--blue)}
+.proj-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:220px 220px;gap:1.2rem;margin-top:3rem}
+.proj-tile{position:relative;overflow:hidden;border-radius:3px;transform-style:preserve-3d;will-change:transform}
+.proj-tile:first-child{grid-row:span 2}
+.proj-tile img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.38) saturate(.5);transition:transform .55s,filter .55s}
+.proj-tile:hover img{transform:scale(1.07);filter:brightness(.55) saturate(.75)}
+.proj-info{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;background:linear-gradient(to top,rgba(6,13,31,.92),transparent)}
+.proj-tile:first-child .proj-info{padding:2rem}
+.proj-cat{font-family:var(--hg);font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--g);margin-bottom:.35rem}
+.proj-tile h3{font-family:var(--hd);font-size:.95rem;font-weight:600;text-transform:uppercase;color:var(--white)}
+.proj-tile:first-child h3{font-size:1.65rem}
+.proj-border{position:absolute;inset:0;border:1.5px solid transparent;transition:border-color .35s ease;pointer-events:none}
+.proj-tile:hover .proj-border{border-color:rgba(244,123,32,.3)}
+
+/* ══ WHY ══ */
+#why{background:linear-gradient(135deg,var(--deep),#050b18)}
+#why::before{content:'NEXORA';position:absolute;right:-2%;top:50%;transform:translateY(-50%);font-family:var(--hd);font-size:clamp(6rem,14vw,14rem);font-weight:700;color:rgba(244,123,32,.025);pointer-events:none;white-space:nowrap}
+.why-head{max-width:780px;margin-bottom:2.5rem}
+.why-list{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.5rem}
+.why-item{display:flex;gap:1.2rem;align-items:flex-start;padding:1.6rem;background:rgba(6,13,31,.55);border:1px solid rgba(74,79,85,.18);border-left:3px solid var(--g);border-radius:0 3px 3px 0;transition:background .3s,transform .3s,box-shadow .3s;transform-style:preserve-3d;will-change:transform}
+.why-item:hover{background:rgba(6,13,31,.9);transform:translateX(8px) perspective(400px) rotateY(-2deg);box-shadow:-8px 0 24px rgba(244,123,32,.12)}
+.why-ico{font-size:1.7rem;flex-shrink:0;margin-top:2px;filter:drop-shadow(0 0 6px rgba(244,123,32,.4))}
+.why-item h4{font-family:var(--hg);font-size:.95rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--white);margin-bottom:.3rem}
+.why-item p{font-size:.86rem;color:var(--dim);line-height:1.65}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.m-card{background:rgba(6,13,31,.55);border:1px solid rgba(244,123,32,.12);padding:2.2rem 1.5rem;text-align:center;border-radius:3px;transform-style:preserve-3d;will-change:transform;transition:background .3s,border-color .3s,box-shadow .3s}
+.m-card:hover{background:rgba(244,123,32,.07);border-color:rgba(244,123,32,.4);box-shadow:0 0 30px rgba(244,123,32,.1)}
+.m-n{font-family:var(--hd);font-size:3rem;font-weight:700;color:var(--g);line-height:1;display:block;margin-bottom:.5rem;text-shadow:0 0 20px rgba(244,123,32,.4)}
+.m-l{font-family:var(--hg);font-size:.75rem;color:var(--faint);letter-spacing:.12em;text-transform:uppercase}
+
+/* ══ CONTACT ══ */
+#contact{background:var(--blue)}
+.con-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.con-items{display:flex;flex-direction:column;gap:1.5rem;margin-top:2.5rem}
+.con-item{display:flex;gap:1rem;align-items:flex-start}
+.con-ico{width:46px;height:46px;border-radius:2px;background:rgba(244,123,32,.08);border:1px solid rgba(244,123,32,.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;transition:background .3s,box-shadow .3s}
+.con-item:hover .con-ico{background:rgba(244,123,32,.15);box-shadow:0 0 16px rgba(244,123,32,.2)}
+.con-item h4{font-family:var(--hg);font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:.25rem}
+.con-item p{font-size:.9rem;color:var(--dim)}
+.form-wrap{background:rgba(10,31,68,.5);border:1px solid rgba(244,123,32,.1);padding:2.5rem;border-radius:4px;transform-style:preserve-3d;will-change:transform;transition:box-shadow .3s}
+.form-wrap:hover{box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 40px rgba(244,123,32,.06)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.fg label{font-family:var(--hg);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.fg input,.fg textarea,.fg select{background:rgba(6,13,31,.7);border:1px solid rgba(74,79,85,.35);color:var(--white);padding:.78rem 1rem;border-radius:2px;font-family:var(--bd);font-size:.9rem;outline:none;transition:border-color .25s,background .25s,box-shadow .25s;-webkit-appearance:none}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--g);background:rgba(6,13,31,.9);box-shadow:0 0 0 3px rgba(244,123,32,.08),0 0 16px rgba(244,123,32,.1)}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(240,244,248,.22)}
+.fg textarea{min-height:110px;resize:vertical}
+.fg select option{background:var(--deep)}
+
+/* ══ FOOTER ══ */
+footer{background:rgba(4,8,18,.95);border-top:1px solid rgba(74,79,85,.25);padding:3rem 5%}
+.ft-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+.ft-logo{display:inline-flex;align-items:center;text-decoration:none}
+.ft-logo img{height:38px;width:auto;display:block;opacity:.92;transition:opacity .25s}
+.ft-logo:hover img{opacity:1}
+.ft-tag{font-family:var(--hg);font-size:.75rem;color:var(--faint);letter-spacing:.08em;margin-top:.25rem}
+.ft-links{display:flex;gap:2rem;list-style:none}
+.ft-links a{font-family:var(--hg);font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);text-decoration:none;transition:color .2s}
+.ft-links a:hover{color:var(--g)}
+.ft-copy{width:100%;font-size:.75rem;color:rgba(240,244,248,.3);text-align:center;padding-top:1.5rem;border-top:1px solid rgba(74,79,85,.15);margin-top:.75rem}
+
+/* ══ MOBILE ══ */
+@media(max-width:900px){.about-grid,.con-grid,.vert-grid{grid-template-columns:1fr;gap:3rem}.why-list{grid-template-columns:1fr}.proj-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.proj-tile:first-child{grid-column:span 2;height:280px}.hero-stats{position:static;margin-top:2.5rem;justify-content:flex-start;left:auto;right:auto;gap:1.6rem}.stat-n{font-size:1.6rem}}
+@media(max-width:700px){.nav-links{display:none;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(6,13,31,.98);padding:2rem 5%;border-bottom:1px solid rgba(244,123,32,.12);gap:1.2rem}.nav-links.open{display:flex}.hamburger{display:flex}.svc-grid{grid-template-columns:1fr}.hero-title{font-size:2.5rem}.proj-grid{grid-template-columns:1fr;grid-template-rows:auto}.proj-tile:first-child{grid-column:span 1;height:300px}.vm-grid,.form-row{grid-template-columns:1fr}.ft-links{display:none}body{cursor:auto}.c-dot,.c-ring{display:none}}
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="progressBar"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">
+    <img src="assets/nexora-logo-transparent.png" alt="Nexora Engineering Solutions"/>
+  </div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  <div class="loader-text">Initializing Systems</div>
+</div>
+
+<!-- CURSOR -->
+<div class="c-dot" id="cdot"></div>
+<div class="c-ring" id="cring"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="logo brand" aria-label="Nexora Engineering Solutions home">
+    <img src="assets/nexora-logo-transparent.png" alt="Nexora Engineering Solutions Pvt. Ltd."/>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hbg" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="webgl"></canvas>
+  <div class="hero-noise"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Silicon Beach City · Global Standards</div>
+    <h1 class="hero-title">Nexora<br/>Global <span class="g">Engineering</span><br/>Solutions<span style="color:var(--g)">_</span></h1>
+    <p class="hero-sub">Engineering the Future of Energy &amp; Industry</p>
+    <p class="hero-micro">Delivering Excellence in Plant Engineering &amp; Design</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn btn-p">Our Services ↓</a>
+      <a href="#contact" class="btn btn-o">Contact Us</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-n" data-val="15">0</div><div class="stat-l">Industries<br/>Served</div></div>
+    <div class="stat-item"><div class="stat-n" data-val="2" data-suffix="">0</div><div class="stat-l">Core<br/>Verticals</div></div>
+    <div class="stat-item"><div class="stat-n" data-val="8">0</div><div class="stat-l">Engineering<br/>Disciplines</div></div>
+    <div class="stat-item"><div class="stat-n" data-val="20">0</div><div class="stat-l">Years Core<br/>Experience</div></div>
+    <div class="stat-item"><div class="stat-n" data-val="100">0</div><div class="stat-l">Global<br/>Standards</div></div>
+  </div>
+  <div class="scroll-ind"><div class="scroll-line"></div>Scroll</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap rvl">
+      <div class="corner-tl"></div>
+      <div class="corner-br"></div>
+      <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=900&q=80" alt="Engineering" loading="lazy"/>
+    </div>
+    <div class="rvr">
+      <div class="s-label">Who We Are</div>
+      <h2 class="s-title">Engineering Excellence Rooted in<br/><span style="color:var(--b)">Silicon Beach City</span><span style="color:var(--g)">_</span></h2>
+      <p class="s-desc">Nexora Global Engineering Solutions is a specialized multidisciplinary engineering organization formed by experienced professionals with deep expertise in plant engineering — across both <strong style="color:var(--white);font-weight:600">offshore and onshore systems</strong>.</p>
+      <p class="s-desc" style="margin-top:1rem">With a strong foundation in Silicon Beach City, we combine regional technical strength with global engineering practices to deliver high-quality, cost-efficient solutions.</p>
+      <div class="vm-grid">
+        <div class="vm-card"><h4>Vision</h4><p>To become a globally trusted engineering partner delivering innovative and sustainable solutions.</p></div>
+        <div class="vm-card"><h4>Mission</h4><p>High-quality, cost-efficient engineering services through technical excellence and collaboration.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="svc-head">
+    <div class="rv">
+      <div class="s-label">What We Do</div>
+      <h2 class="s-title">Core Engineering<br/>Services</h2>
+    </div>
+    <p class="s-desc rv" style="text-align:right;max-width:300px">Precision engineering across the full project lifecycle — from concept to commissioning.</p>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card rv"><div class="svc-shine"></div><span class="svc-n">01</span><span class="svc-ico">⚙️</span><h3>Process</h3><p>P&amp;IDs, hydraulic calculations, line sizing, HAZOP study, feasibility study, material selections, equipment sizing &amp; calculations, MR &amp; TBE, and process optimization for industrial plants.</p></div>
+    <div class="svc-card rv" style="transition-delay:.06s"><div class="svc-shine"></div><span class="svc-n">02</span><span class="svc-ico">🔧</span><h3>Mechanical Equipment</h3><p>Vessel calculations of static equipment and pressure vessels, material handling, support, and auxiliary systems.</p></div>
+    <div class="svc-card rv" style="transition-delay:.12s"><div class="svc-shine"></div><span class="svc-n">03</span><span class="svc-ico">🛡️</span><h3>HSE</h3><p>HAZOP and HAZID study, compliance and standards such as OSHA, OISD, and ISO for standard practices.</p></div>
+    <div class="svc-card rv" style="transition-delay:.18s"><div class="svc-shine"></div><span class="svc-n">04</span><span class="svc-ico">🔩</span><h3>Piping</h3><p>3D piping plot plan, conceptual study, layout, BOQs, isometrics, stress analysis, pipe support design, material specifications &amp; as-builts.</p></div>
+    <div class="svc-card rv" style="transition-delay:.24s"><div class="svc-shine"></div><span class="svc-n">05</span><span class="svc-ico">🏗️</span><h3>Civil &amp; Structural</h3><p>Racks, foundations, process structure, offshore platform design and analysis.</p></div>
+    <div class="svc-card rv" style="transition-delay:.3s"><div class="svc-shine"></div><span class="svc-n">06</span><span class="svc-ico">⚡</span><h3>Electrical</h3><p>SLDs, load list, HAC classifications, cable scheduling and routing layout of cables and cable trays with supports.</p></div>
+    <div class="svc-card rv" style="transition-delay:.36s"><div class="svc-shine"></div><span class="svc-n">07</span><span class="svc-ico">📡</span><h3>Instrumentation &amp; Telecommunication</h3><p>Transmitters, control system, actuator selection, I/O schedule, loop drawing, and F&amp;G system design.</p></div>
+    <div class="svc-card rv" style="transition-delay:.42s"><div class="svc-shine"></div><span class="svc-n">08</span><span class="svc-ico">📐</span><h3>Pipe Stress / Structural Analysis</h3><p>Static analysis, dynamic analysis, thermal, wind and seismic analysis. Pipe stress mark-ups for critical areas.</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VERTICALS -->
+<section id="industries">
+  <div class="vert-head">
+    <div class="rv">
+      <div class="s-label">Sectors We Serve</div>
+      <h2 class="s-title">Two Core Verticals</h2>
+    </div>
+    <p class="s-desc rv" style="text-align:right;max-width:340px">Specialised engineering across sectors that demand zero tolerance for error — onshore plants and offshore assets.</p>
+  </div>
+  <div class="vert-grid">
+    <div class="vert-card rvl" data-num="01">
+      <span class="vert-ico">🏭</span>
+      <div class="vert-sub">Vertical 01</div>
+      <h3>Onshore</h3>
+      <div class="vert-tags">
+        <span>Oil &amp; Gas</span>
+        <span>Food &amp; Beverage</span>
+        <span>Petrochemical</span>
+        <span>Chemical</span>
+        <span>Pharma</span>
+        <span>Mining</span>
+        <span>Storage Terminals</span>
+        <span>Skid Packages</span>
+        <span>Power Sector</span>
+        <span>WTP / STP</span>
+      </div>
+    </div>
+    <div class="vert-card rvr" data-num="02" style="transition-delay:.1s">
+      <span class="vert-ico">🛢️</span>
+      <div class="vert-sub">Vertical 02</div>
+      <h3>Offshore</h3>
+      <div class="vert-tags">
+        <span>FPSO</span>
+        <span>FPU</span>
+        <span>FSO</span>
+        <span>Jack-up Rigs</span>
+        <span>Fixed Platforms</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="rv">
+    <div class="s-label">Our Work</div>
+    <h2 class="s-title">Projects &amp; Capabilities</h2>
+    <p class="s-desc">Delivering precision engineering across global projects — brownfield retrofits to greenfield developments.</p>
+  </div>
+  <div class="proj-grid">
+    <div class="proj-tile rvl"><div class="proj-border"></div><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=80" alt="Offshore" loading="lazy"/><div class="proj-info"><div class="proj-cat">Offshore</div><h3>Offshore Platforms &amp; FPSO Systems</h3></div></div>
+    <div class="proj-tile rv" style="transition-delay:.1s"><div class="proj-border"></div><img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=75" alt="Plant" loading="lazy"/><div class="proj-info"><div class="proj-cat">Onshore</div><h3>Processing Plants</h3></div></div>
+    <div class="proj-tile rv" style="transition-delay:.15s"><div class="proj-border"></div><img src="https://images.unsplash.com/photo-1562979314-bee7453e911c?w=600&q=75" alt="Skid" loading="lazy"/><div class="proj-info"><div class="proj-cat">Modular</div><h3>Modular Skids</h3></div></div>
+    <div class="proj-tile rv" style="transition-delay:.2s"><div class="proj-border"></div><img src="https://images.unsplash.com/photo-1491895200222-0fc4a4c35e18?w=600&q=75" alt="Greenfield" loading="lazy"/><div class="proj-info"><div class="proj-cat">Greenfield</div><h3>New Facility Design</h3></div></div>
+    <div class="proj-tile rv" style="transition-delay:.25s"><div class="proj-border"></div><img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&q=75" alt="Brownfield" loading="lazy"/><div class="proj-info"><div class="proj-cat">Brownfield</div><h3>Retrofit &amp; Expansion</h3></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHY -->
+<section id="why">
+  <div class="why-head">
+    <div class="s-label rv">Why Choose Us</div>
+    <h2 class="s-title rv">Built Different.<br/><span style="color:var(--g)">Delivered Better.</span></h2>
+  </div>
+  <div class="why-list">
+    <div class="why-item rv" style="transition-delay:.06s"><div class="why-ico">🌊</div><div><h4>Coastal Engineering Heritage</h4><p>Engineers from coastal Karnataka are recognized globally — demonstrating exceptional expertise across all major engineering sectors.</p></div></div>
+    <div class="why-item rv" style="transition-delay:.12s"><div class="why-ico">👷</div><div><h4>Highly Skilled Technical Team</h4><p>Domain expertise across process, structural, piping, EIT, analysis, and HSE disciplines.</p></div></div>
+    <div class="why-item rv" style="transition-delay:.18s"><div class="why-ico">🌐</div><div><h4>Global Standards &amp; Compliance</h4><p>ASME, AGES, SAES, and API compliant deliverables produced using a range of industry-leading engineering tools.</p></div></div>
+    <div class="why-item rv" style="transition-delay:.24s"><div class="why-ico">💡</div><div><h4>Cost-Efficient Execution</h4><p>Optimized project delivery that reduces overhead without compromising quality or safety.</p></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="con-grid">
+    <div>
+      <div class="s-label rv">Get In Touch</div>
+      <h2 class="s-title rv">Let's Engineer<br/><span style="color:var(--g)">Something Great</span></h2>
+      <p class="s-desc rv">Whether you have a new project or want to explore how Nexora can support your engineering needs, we'd love to hear from you.</p>
+      <div class="con-items">
+        <div class="con-item rv"><div class="con-ico">📍</div><div><h4>Location</h4><p><a href="https://www.google.com/maps/place/Nexora+Engineering+Solutions+Pvt.+Ltd./@12.8584401,74.8396025,17z/data=!3m1!4b1!4m6!3m5!1s0x3ba35b31b3ca53c7:0x9b1379cf13069b82!8m2!3d12.8584401!4d74.8396025!16s%2Fg%2F11z6qmz3jc?hl=en" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px dashed rgba(244,123,32,.4);transition:color .2s,border-color .2s" onmouseover="this.style.color='var(--g)';this.style.borderColor='var(--g)'" onmouseout="this.style.color='';this.style.borderColor='rgba(244,123,32,.4)'">Nexora Engineering Solutions Pvt. Ltd.<br/>Silicon Beach City, India · View on Maps ↗</a></p></div></div>
+        <div class="con-item rv" style="transition-delay:.1s"><div class="con-ico">✉️</div><div><h4>Email</h4><p><a href="mailto:contact@nexoraglobales.com" style="color:inherit;text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--g)'" onmouseout="this.style.color=''">contact@nexoraglobales.com</a></p></div></div>
+        <div class="con-item rv" style="transition-delay:.15s"><div class="con-ico">📞</div><div><h4>Phone</h4><p><a href="tel:+919742426161" style="color:inherit;text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--g)'" onmouseout="this.style.color=''">+91 97424 26161</a></p></div></div>
+      </div>
+    </div>
+    <div class="form-wrap rvr">
+      <div class="form-row">
+        <div class="fg"><label>Full Name</label><input type="text" placeholder="Your name"/></div>
+        <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+      </div>
+      <div class="fg"><label>Company</label><input type="text" placeholder="Your organization"/></div>
+      <div class="fg"><label>Service Interest</label>
+        <select><option value="" disabled selected>Select a service</option><option>Process</option><option>Mechanical Equipment</option><option>HSE</option><option>Piping</option><option>Civil &amp; Structural</option><option>Electrical</option><option>Instrumentation &amp; Telecommunication</option><option>Pipe Stress / Structural Analysis</option><option>Other</option></select>
+      </div>
+      <div class="fg"><label>Message</label><textarea placeholder="Tell us about your project…"></textarea></div>
+      <button class="btn btn-p" style="width:100%;justify-content:center;font-size:1rem" id="submitBtn" onclick="submitForm()">Send Enquiry →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner">
+    <div>
+      <a href="#hero" class="ft-logo">
+        <img src="assets/nexora-logo-transparent.png" alt="Nexora Engineering Solutions Pvt. Ltd."/>
+      </a>
+      <div class="ft-tag">Engineering the Future of Energy &amp; Industry</div>
+    </div>
+    <ul class="ft-links"><li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#industries">Industries</a></li><li><a href="#projects">Projects</a></li><li><a href="#contact">Contact</a></li></ul>
+    <div class="ft-copy">© 2026 Nexora Global Engineering Solutions Pvt. Ltd. · Silicon Beach City, India · All Rights Reserved.</div>
+  </div>
+</footer>
+
+<!-- THREE.JS + GSAP + LENIS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+const isMobile = window.innerWidth < 768;
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Graceful fallback if CDN libs fail */
+if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+  console.warn('[Nexora] GSAP failed to load — falling back to plain scroll.');
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const l = document.getElementById('loader');
+      if (!l) return;
+      l.style.transition = 'opacity .8s ease';
+      l.style.opacity = 0;
+      setTimeout(() => l.remove(), 900);
+    }, 1200);
+  });
+  return;
+}
+
+/* ──────────────────────────────────────────
+   GSAP + SCROLLTRIGGER + LENIS SETUP
+────────────────────────────────────────── */
+gsap.registerPlugin(ScrollTrigger);
+gsap.config({ nullTargetWarn: false });
+
+let lenis = null;
+if (!reducedMotion && typeof Lenis !== 'undefined') {
+  try {
+    lenis = new Lenis({
+      duration: 1.15,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false,
+      touchMultiplier: 1.4,
+      wheelMultiplier: 1.0
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+  } catch (err) {
+    console.warn('[Nexora] Lenis init failed, using native scroll.', err);
+    lenis = null;
+  }
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (!id || id.length < 2) return;
+    const tgt = document.querySelector(id);
+    if (!tgt) return;
+    e.preventDefault();
+    const navLinks = document.getElementById('navLinks');
+    if (navLinks) navLinks.classList.remove('open');
+    if (lenis) {
+      lenis.scrollTo(tgt, { offset: -64, duration: 1.4, easing: t => 1 - Math.pow(1 - t, 3) });
+    } else {
+      tgt.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+/* ──────────────────────────────────────────
+   LOADER + HERO ENTRANCE
+────────────────────────────────────────── */
+gsap.set(['.hero-badge','.hero-title','.hero-sub','.hero-micro','.hero-btns .btn','.hero-stats .stat-item','.scroll-ind'], { autoAlpha:0, y:38 });
+
+window.addEventListener('load', () => {
+  const tl = gsap.timeline({ defaults:{ ease:'power3.out' }});
+
+  tl.to('#loader .loader-logo img', { scale:1.06, duration:0.6, ease:'power2.inOut', delay:0.6 })
+    .to('#loader', { autoAlpha:0, duration:0.9, ease:'power2.inOut', onComplete:()=>{ const l=document.getElementById('loader'); if(l) l.remove(); ScrollTrigger.refresh(); } }, '-=0.1')
+    .to('.logo img', { autoAlpha:1, scale:1, duration:0.7, ease:'back.out(1.5)', clearProps:'scale' }, '-=0.6')
+    .from('.nav-links li', { y:-20, autoAlpha:0, stagger:0.06, duration:0.5 }, '-=0.4')
+    .to('.hero-badge', { autoAlpha:1, y:0, duration:0.7 }, '-=0.3')
+    .to('.hero-title', { autoAlpha:1, y:0, duration:1.0 }, '-=0.4')
+    .to('.hero-sub', { autoAlpha:1, y:0, duration:0.6 }, '-=0.7')
+    .to('.hero-micro', { autoAlpha:1, y:0, duration:0.6 }, '-=0.5')
+    .to('.hero-btns .btn', { autoAlpha:1, y:0, duration:0.6, stagger:0.1 }, '-=0.4')
+    .to('.hero-stats .stat-item', { autoAlpha:1, y:0, duration:0.55, stagger:0.08 }, '-=0.3')
+    .to('.scroll-ind', { autoAlpha:1, y:0, duration:0.5 }, '-=0.3');
+});
+
+/* ──────────────────────────────────────────
+   THREE.JS HERO
+────────────────────────────────────────── */
+
+function initThree() {
+  const canvas = document.getElementById('webgl');
+  const hero   = document.getElementById('hero');
+  let W = hero.offsetWidth, H = hero.offsetHeight;
+
+  const scene    = new THREE.Scene();
+  scene.fog      = new THREE.FogExp2(0x060D1F, 0.022);
+
+  const camera   = new THREE.PerspectiveCamera(60, W/H, 0.1, 120);
+  camera.position.z = 16;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+  renderer.setSize(W, H);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+  // ── Large background icosahedron ──
+  const ico = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(9, 1),
+    new THREE.MeshBasicMaterial({ color:0xF47B20, wireframe:true, transparent:true, opacity:.04 })
+  );
+  scene.add(ico);
+
+  // ── Inner spinning octahedron ──
+  const oct = new THREE.Mesh(
+    new THREE.OctahedronGeometry(3.2),
+    new THREE.MeshBasicMaterial({ color:0xF47B20, wireframe:true, transparent:true, opacity:.18 })
+  );
+  scene.add(oct);
+
+  // ── Torus rings ──
+  const mkTorus = (r, t, ox, ry) => {
+    const m = new THREE.Mesh(
+      new THREE.TorusGeometry(r, t, 4, 120),
+      new THREE.MeshBasicMaterial({ color:0xF47B20, transparent:true, opacity:.1, blending:THREE.AdditiveBlending })
+    );
+    m.rotation.x = ox; m.rotation.y = ry||0;
+    scene.add(m); return m;
+  };
+  const t1 = mkTorus(5.5, .018, 1.1, 0);
+  const t2 = mkTorus(3.8, .012, .5, 1.3);
+  const t3 = mkTorus(7,   .01,  .3, .8);
+
+  // ── Particles (star field) ──
+  const pCount = isMobile ? 1000 : 2500;
+  const pPos   = new Float32Array(pCount * 3);
+  for (let i=0; i<pCount; i++) {
+    pPos[i*3]   = (Math.random()-.5)*55;
+    pPos[i*3+1] = (Math.random()-.5)*38;
+    pPos[i*3+2] = (Math.random()-.5)*28 - 4;
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+  const pts = new THREE.Points(pGeo, new THREE.PointsMaterial({
+    color:0xF47B20, size:.038, transparent:true, opacity:.65,
+    blending:THREE.AdditiveBlending, depthWrite:false
+  }));
+  scene.add(pts);
+
+  // ── Network nodes + connection lines ──
+  const nodeCount = isMobile ? 80 : 180;
+  const nodes = Array.from({length:nodeCount}, () => [
+    (Math.random()-.5)*28, (Math.random()-.5)*20, (Math.random()-.5)*14
+  ]);
+  const lv = [];
+  for (let i=0; i<nodeCount; i++) {
+    for (let j=i+1; j<nodeCount; j++) {
+      const dx=nodes[i][0]-nodes[j][0], dy=nodes[i][1]-nodes[j][1], dz=nodes[i][2]-nodes[j][2];
+      if (dx*dx+dy*dy+dz*dz < 20) { lv.push(...nodes[i], ...nodes[j]); }
+    }
+  }
+  const lGeo = new THREE.BufferGeometry();
+  lGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lv), 3));
+  const lines = new THREE.LineSegments(lGeo,
+    new THREE.LineBasicMaterial({ color:0xF47B20, transparent:true, opacity:.055, blending:THREE.AdditiveBlending })
+  );
+  scene.add(lines);
+
+  // ── Node dot cloud ──
+  const nPos = new Float32Array(nodeCount*3);
+  nodes.forEach((n,i)=>{ nPos[i*3]=n[0]; nPos[i*3+1]=n[1]; nPos[i*3+2]=n[2]; });
+  const nGeo = new THREE.BufferGeometry();
+  nGeo.setAttribute('position', new THREE.BufferAttribute(nPos,3));
+  scene.add(new THREE.Points(nGeo, new THREE.PointsMaterial({
+    color:0x2196F3, size:.07, transparent:true, opacity:.7,
+    blending:THREE.AdditiveBlending, depthWrite:false
+  })));
+
+  // ── Mouse parallax ──
+  let mx=0, my=0, cx=0, cy=0;
+  window.addEventListener('mousemove', e => {
+    mx = (e.clientX/W - .5) * 3.5;
+    my = -(e.clientY/H - .5) * 2.5;
+  });
+
+  // ── Resize ──
+  const onResize = () => {
+    W = hero.offsetWidth; H = hero.offsetHeight;
+    camera.aspect = W/H;
+    camera.updateProjectionMatrix();
+    renderer.setSize(W,H);
+  };
+  window.addEventListener('resize', onResize);
+
+  // ── Animate ──
+  let frame = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    frame++;
+    const t = frame * .004;
+
+    ico.rotation.x = t * .28; ico.rotation.y = t * .44;
+    oct.rotation.x = -t*.55;  oct.rotation.z = t*.7;
+    t1.rotation.z  = t*.38;
+    t2.rotation.y  = t*.42;
+    t3.rotation.x  = t*.22;
+    pts.rotation.y = t*.04;
+    lines.rotation.y = t*.04;
+
+    cx += (mx - cx) * .032;
+    cy += (my - cy) * .032;
+    camera.position.x = cx;
+    camera.position.y = cy;
+    camera.lookAt(0,0,0);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+}
+
+if (!isMobile) initThree();
+else {
+  // Mobile: CSS gradient bg instead of WebGL
+  document.getElementById('webgl').style.cssText =
+    'position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(10,31,68,.9),rgba(6,13,31,1));';
+}
+
+/* ──────────────────────────────────────────
+   CUSTOM CURSOR (GSAP quickTo)
+────────────────────────────────────────── */
+if (!isMobile && !reducedMotion) {
+  const dot  = document.getElementById('cdot');
+  const ring = document.getElementById('cring');
+
+  const dotX  = gsap.quickTo(dot, 'x', { duration:0.06, ease:'power2.out' });
+  const dotY  = gsap.quickTo(dot, 'y', { duration:0.06, ease:'power2.out' });
+  const ringX = gsap.quickTo(ring, 'x', { duration:0.45, ease:'power3.out' });
+  const ringY = gsap.quickTo(ring, 'y', { duration:0.45, ease:'power3.out' });
+
+  window.addEventListener('mousemove', e => {
+    dotX(e.clientX);  dotY(e.clientY);
+    ringX(e.clientX); ringY(e.clientY);
+  }, { passive: true });
+
+  document.querySelectorAll('a,button,.svc-card,.vert-card,.proj-tile,.why-item,.vm-card,.form-wrap').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+  });
+}
+
+/* ──────────────────────────────────────────
+   3D CARD TILT (GSAP quickTo - silky smooth)
+────────────────────────────────────────── */
+function addTilt(sel, intensity=12, lift=18) {
+  if (isMobile || reducedMotion) return;
+  document.querySelectorAll(sel).forEach(card => {
+    gsap.set(card, { transformPerspective: 800, transformStyle: 'preserve-3d' });
+    const rotY = gsap.quickTo(card, 'rotationY', { duration:0.55, ease:'power3.out' });
+    const rotX = gsap.quickTo(card, 'rotationX', { duration:0.55, ease:'power3.out' });
+    const trZ  = gsap.quickTo(card, 'z',         { duration:0.55, ease:'power3.out' });
+    const sc   = gsap.quickTo(card, 'scale',     { duration:0.55, ease:'power3.out' });
+
+    card.addEventListener('mousemove', e => {
+      const r  = card.getBoundingClientRect();
+      const x  = (e.clientX-r.left)/r.width  - .5;
+      const y  = (e.clientY-r.top)/r.height  - .5;
+      rotY(x * intensity);
+      rotX(-y * intensity);
+      trZ(lift);
+      sc(1.015);
+      card.style.boxShadow = `${-x*22}px ${-y*22}px 42px rgba(244,123,32,.18), 0 22px 55px rgba(0,0,0,.5)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      rotY(0); rotX(0); trZ(0); sc(1);
+      gsap.to(card, { boxShadow:'0 0 0 rgba(0,0,0,0)', duration:0.5, ease:'power3.out', overwrite:'auto' });
+    });
+  });
+}
+addTilt('.svc-card', 11, 18);
+addTilt('.vert-card', 6, 14);
+addTilt('.vm-card', 9, 14);
+addTilt('.form-wrap', 4, 8);
+addTilt('.proj-tile', 7, 14);
+addTilt('.why-item', 5, 10);
+
+/* ──────────────────────────────────────────
+   MAGNETIC BUTTONS (GSAP quickTo)
+────────────────────────────────────────── */
+if (!isMobile && !reducedMotion) {
+  document.querySelectorAll('.btn,.nav-cta').forEach(btn => {
+    const xTo = gsap.quickTo(btn, 'x', { duration:0.45, ease:'power3.out' });
+    const yTo = gsap.quickTo(btn, 'y', { duration:0.45, ease:'power3.out' });
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      xTo((e.clientX - r.left - r.width/2)  * 0.3);
+      yTo((e.clientY - r.top  - r.height/2) * 0.4);
+    });
+    btn.addEventListener('mouseleave', () => { xTo(0); yTo(0); });
+  });
+}
+
+/* ──────────────────────────────────────────
+   SCROLL REVEALS — ScrollTrigger fires the CSS class
+────────────────────────────────────────── */
+gsap.utils.toArray('.rv, .rvl, .rvr').forEach(el => {
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 88%',
+    once: true,
+    onEnter: () => el.classList.add('on')
+  });
+});
+
+/* Service cards — extra GSAP stagger for richer feel */
+ScrollTrigger.create({
+  trigger: '.svc-grid',
+  start: 'top 82%',
+  once: true,
+  onEnter: () => {
+    gsap.fromTo('.svc-card',
+      { y: 50, autoAlpha: 0, scale: 0.97 },
+      { y: 0, autoAlpha: 1, scale: 1, duration: 0.85, stagger: 0.07, ease: 'power3.out', overwrite: 'auto' }
+    );
+  }
+});
+
+/* Why-items 2x2 stagger */
+ScrollTrigger.create({
+  trigger: '.why-list',
+  start: 'top 82%',
+  once: true,
+  onEnter: () => {
+    gsap.fromTo('.why-item',
+      { x: -30, autoAlpha: 0 },
+      { x: 0, autoAlpha: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out', overwrite: 'auto' }
+    );
+  }
+});
+
+/* Vert-card sub-vertical tags pop-in */
+gsap.utils.toArray('.vert-card').forEach(card => {
+  const tags = card.querySelectorAll('.vert-tags span');
+  if (!tags.length) return;
+  gsap.set(tags, { autoAlpha: 0, y: 16, scale: 0.85 });
+  ScrollTrigger.create({
+    trigger: card,
+    start: 'top 78%',
+    once: true,
+    onEnter: () => {
+      gsap.to(tags, { autoAlpha:1, y:0, scale:1, duration:0.5, stagger:0.04, ease:'back.out(1.6)' });
+    }
+  });
+});
+
+/* Project tiles cascade */
+ScrollTrigger.create({
+  trigger: '.proj-grid',
+  start: 'top 82%',
+  once: true,
+  onEnter: () => {
+    gsap.fromTo('.proj-tile',
+      { y: 40, autoAlpha: 0, scale: 0.96 },
+      { y: 0, autoAlpha: 1, scale: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out', overwrite: 'auto' }
+    );
+  }
+});
+
+/* ──────────────────────────────────────────
+   COUNTERS — GSAP smooth number tween
+────────────────────────────────────────── */
+gsap.utils.toArray('[data-val]').forEach(el => {
+  const target = parseInt(el.dataset.val);
+  if (!Number.isFinite(target)) return;
+  const explicit = el.dataset.suffix;
+  const suffix = explicit !== undefined ? explicit : (target === 100 ? '%' : '+');
+  const obj = { n: 0 };
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 92%',
+    once: true,
+    onEnter: () => {
+      gsap.to(obj, {
+        n: target,
+        duration: 2,
+        ease: 'power3.out',
+        onUpdate: () => { el.textContent = Math.round(obj.n) + suffix; }
+      });
+    }
+  });
+});
+
+/* ──────────────────────────────────────────
+   NAV — bg shift + active section (Lenis-aware)
+────────────────────────────────────────── */
+const navbar = document.getElementById('navbar');
+const secs   = document.querySelectorAll('section[id]');
+const nlinks = document.querySelectorAll('.nav-links a');
+
+const handleNavScroll = (scroll) => {
+  navbar.style.background = scroll > 60 ? 'rgba(6,13,31,.97)' : 'rgba(6,13,31,.82)';
+  let cur = '';
+  secs.forEach(s => { if (scroll >= s.offsetTop - 120) cur = s.id; });
+  nlinks.forEach(a => {
+    a.style.color = (a.getAttribute('href') === '#' + cur) ? 'var(--g)' : '';
+  });
+};
+if (lenis) {
+  lenis.on('scroll', ({ scroll }) => handleNavScroll(scroll));
+} else {
+  window.addEventListener('scroll', () => handleNavScroll(window.scrollY), { passive:true });
+}
+
+/* ──────────────────────────────────────────
+   SCROLL PROGRESS BAR
+────────────────────────────────────────── */
+gsap.to('#progressBar', {
+  scaleX: 1,
+  ease: 'none',
+  scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+});
+
+/* ──────────────────────────────────────────
+   CSS 3D FLOATING GEOMETRY — section bgs
+────────────────────────────────────────── */
+function makeFloatCube(parent, size, top, right, opacity=.5, dur=22) {
+  const w = document.createElement('div');
+  w.className = 'float-cube';
+  w.style.cssText = `position:absolute;top:${top};right:${right};width:${size}px;height:${size}px;perspective:400px;pointer-events:none;z-index:0;opacity:${opacity};will-change:transform`;
+  const cube = document.createElement('div');
+  cube.style.cssText = `width:100%;height:100%;transform-style:preserve-3d;animation:rotateCube3d ${dur}s linear infinite`;
+  const half = size/2;
+  const transforms = [
+    `translateZ(${half}px)`,`translateZ(-${half}px) rotateY(180deg)`,
+    `rotateY(90deg) translateZ(${half}px)`,`rotateY(-90deg) translateZ(${half}px)`,
+    `rotateX(90deg) translateZ(${half}px)`,`rotateX(-90deg) translateZ(${half}px)`
+  ];
+  transforms.forEach(t => {
+    const f = document.createElement('div');
+    f.style.cssText = `position:absolute;width:${size}px;height:${size}px;border:1px solid rgba(244,123,32,.09);transform:${t}`;
+    cube.appendChild(f);
+  });
+  w.appendChild(cube);
+  parent.appendChild(w);
+  return w;
+}
+
+const style = document.createElement('style');
+style.textContent = `@keyframes rotateCube3d{from{transform:rotateX(0)rotateY(0)rotateZ(0)}to{transform:rotateX(360deg)rotateY(360deg)rotateZ(360deg)}}`;
+document.head.appendChild(style);
+
+const cubes = [
+  makeFloatCube(document.getElementById('about'),    180, '-40px', '-40px', .4,  28),
+  makeFloatCube(document.getElementById('services'), 140, '20%',   '-30px', .35, 22),
+  makeFloatCube(document.getElementById('why'),      200, '-50px', '-30px', .35, 32),
+  makeFloatCube(document.getElementById('contact'),  120, '10%',   '-20px', .3,  20)
+];
+
+/* Parallax floating cubes — they drift vertically as you scroll */
+cubes.forEach(w => {
+  gsap.to(w, {
+    yPercent: -45,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: w.parentElement,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 0.8
+    }
+  });
+});
+
+/* ──────────────────────────────────────────
+   HERO PARALLAX (ScrollTrigger scrub)
+────────────────────────────────────────── */
+gsap.to('.hero-content', {
+  yPercent: 22,
+  opacity: 0.15,
+  ease: 'none',
+  scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 0.5 }
+});
+gsap.to('.hero-stats', {
+  yPercent: 80,
+  opacity: 0,
+  ease: 'none',
+  scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 0.5 }
+});
+gsap.to('.scroll-ind', {
+  opacity: 0,
+  ease: 'none',
+  scrollTrigger: { trigger: '#hero', start: 'top top', end: '20% top', scrub: 0.4 }
+});
+
+/* Subtle drift on section titles */
+gsap.utils.toArray('section .s-title').forEach(t => {
+  gsap.from(t, {
+    yPercent: 14,
+    ease: 'none',
+    scrollTrigger: { trigger: t, start: 'top bottom', end: 'top 30%', scrub: 0.7 }
+  });
+});
+
+/* About image gentle zoom on scroll */
+const aboutImg = document.querySelector('.about-img-wrap img');
+if (aboutImg) {
+  gsap.to(aboutImg, {
+    scale: 1.1,
+    ease: 'none',
+    scrollTrigger: { trigger: '#about', start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+  });
+}
+
+/* Refresh ScrollTrigger after fonts/images settle */
+window.addEventListener('load', () => {
+  setTimeout(() => ScrollTrigger.refresh(), 200);
+});
+
+/* ──────────────────────────────────────────
+   FORM (GSAP feedback)
+────────────────────────────────────────── */
+window.submitForm = function() {
+  const btn = document.getElementById('submitBtn');
+  if (!btn) return;
+  gsap.to(btn, {
+    scale: 0.96, duration: 0.12, ease: 'power2.in',
+    onComplete: () => {
+      btn.textContent = '✓  Message Sent!';
+      btn.style.background = 'var(--gd)';
+      btn.disabled = true;
+      gsap.to(btn, { scale: 1, duration: 0.25, ease: 'back.out(1.6)' });
+    }
+  });
+  setTimeout(() => {
+    gsap.to(btn, {
+      opacity: 0, duration: 0.2, ease: 'power2.in',
+      onComplete: () => {
+        btn.textContent = 'Send Enquiry →';
+        btn.style.background = '';
+        btn.disabled = false;
+        gsap.to(btn, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+      }
+    });
+  }, 3000);
+};
+
+})();
+</script>
+</body>
+</html>

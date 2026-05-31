@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import { verticals } from '../data/industries.js';
+---
+<section id="industries">
+  <div class="rv">
+    <div class="s-label"><span class="sec-num">03 /</span> Sectors We Serve</div>
+    <h2 class="s-title">Two Core Verticals</h2>
+    <p class="s-desc">
+      End-to-end engineering across the full energy and process value chain, covering both
+      <a class="ind-link ind-link--g" href="#industries">onshore</a> plants and
+      <a class="ind-link ind-link--b" href="#industries">offshore</a> systems.
+    </p>
+  </div>
+
+  <div class="vert-grid">
+    {verticals.map((v, vi) => (
+      <article
+        class={`vert-card rv card-3d vert-${v.accent}`}
+        style={`transition-delay:${0.1 + vi * 0.08}s`}
+      >
+        {v.img && (
+          <span class="vert-img" aria-hidden="true">
+            <img src={v.img} alt="" loading="lazy" />
+          </span>
+        )}
+        <div class="vert-rail">
+          <span class="vert-sub">{v.sub}</span>
+        </div>
+
+        <div class="vert-head">
+          <span class="vert-ico" aria-hidden="true">
+            <Icon name={v.iconKey} size={42} />
+          </span>
+          <h3 class="vert-title">{v.title}</h3>
+        </div>
+
+        <div class="vert-stats">
+          <div class="vstat">
+            <span
+              class="vstat-n"
+              data-val={v.tags.length}
+              data-suffix=""
+            >0</span>
+            <span class="vstat-l">Sub-verticals</span>
+          </div>
+          <div class="vstat-divider"></div>
+          <div class="vstat">
+            <span class="vstat-n">100<small>%</small></span>
+            <span class="vstat-l">In-house expertise</span>
+          </div>
+        </div>
+
+        <p class="vert-meta">Sectors served</p>
+
+        <ul class="vert-tags">
+          {v.tags.map((t, ti) => (
+            <li class="vert-tag" style={`--ti:${ti}`}>
+              <span class="vert-tag-dot"></span>
+              {t}
+            </li>
+          ))}
+        </ul>
+
+        <div class="vert-glow" aria-hidden="true"></div>
+      </article>
+    ))}
+  </div>
+</section>

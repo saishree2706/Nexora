@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_hover",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_console_messages",
+      "Bash(awk 'NR>=3260 && NR<=3340 { print NR\": \"$0 }' \"c:/Workspace/Talent/Nexora/nexora-astro/src/styles/global.css\")",
+      "Bash(npm install *)",
+      "Bash(npm view *)",
+      "Bash(npm uninstall *)"
+    ]
+  }
+}

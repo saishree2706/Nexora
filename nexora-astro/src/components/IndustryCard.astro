@@ -1,0 +1,19 @@
+---
+const { industry, index } = Astro.props;
+const num   = String(index + 1).padStart(2, '0');
+const delay = `${0.05 + index * 0.05}s`;
+---
+<div class="ind-card rv" style={`transition-delay:${delay}`}>
+  <div class="ind-bar"></div>
+  <div class="ind-glow"></div>
+  <span class="card-num">{num}</span>
+  <img src={industry.img} alt={industry.title} loading="lazy" />
+  <div class="ind-ov">
+    <div class="ind-tag">{industry.tag}</div>
+    <h3>{industry.title}</h3>
+    <div class="ind-meta">
+      <span class="im-bar"></span>
+      <span>Active sector</span>
+    </div>
+  </div>
+</div>

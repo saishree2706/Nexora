@@ -1,0 +1,21 @@
+---
+import ServiceCard from './ServiceCard.astro';
+import { services } from '../data/services.js';
+---
+<section id="services">
+  <div class="svc-head">
+    <div class="rv">
+      <div class="s-label"><span class="sec-num">02 /</span> What We Do</div>
+      <h2 class="s-title">Core Engineering Services</h2>
+    </div>
+    <p class="s-desc rv" style="text-align:right;max-width:340px">
+      Precision engineering across the full project lifecycle — from concept to commissioning.
+      <span class="s-meta">— 14 disciplines · 1 standard</span>
+    </p>
+  </div>
+  <div class="svc-grid">
+    {services.map((service, index) => (
+      <ServiceCard service={service} index={index} />
+    ))}
+  </div>
+</section>

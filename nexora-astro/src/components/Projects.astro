@@ -1,0 +1,18 @@
+---
+import ProjectTile from './ProjectTile.astro';
+import { projects } from '../data/projects.js';
+---
+<section id="projects">
+  <div class="rv">
+    <div class="s-label"><span class="sec-num">04 /</span> Our Work</div>
+    <h2 class="s-title">Projects &amp; Capabilities</h2>
+    <p class="s-desc">
+      Delivering precision engineering across global projects, brownfield retrofits to greenfield developments.
+    </p>
+  </div>
+  <div class="proj-grid">
+    {projects.map((project, index) => (
+      <ProjectTile project={project} index={index} />
+    ))}
+  </div>
+</section>

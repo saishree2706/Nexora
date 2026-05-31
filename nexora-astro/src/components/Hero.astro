@@ -1,0 +1,324 @@
+---
+import { site } from '../data/site.js';
+import { heroStats } from '../data/why.js';
+---
+<section id="hero">
+  <canvas id="webgl"></canvas>
+
+  <!-- Centered 3D refinery model (desktop only) · sits above particles, below gears -->
+  <img class="hero-model" src="/hero-refinery.png" alt="" aria-hidden="true" />
+
+
+  <div class="hero-noise"></div>
+  <div class="hero-vignette"></div>
+
+  <!-- Vertical rotated editorial label (left edge) -->
+  <div class="hero-rail" aria-hidden="true">
+    <span class="hr-line"></span>
+    <span class="hr-text">EST · MMXXVI</span>
+    <span class="hr-line"></span>
+    <span class="hr-text">MANGALURU · IND</span>
+  </div>
+
+  <!-- Headquarters block (top-right of hero) -->
+  <div class="hero-loc" aria-label="Headquarters">
+    <div class="hl-label">Headquarters</div>
+    <div class="hl-place">Mangaluru, India</div>
+    <div class="hl-region">Silicon Beach City</div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      {site.badge}
+    </div>
+    <h1 class="hero-title">
+      <span class="ht-nexora ht-anim">NEXORA</span>
+      <span class="ht-row">
+        <em class="ht-em ht-anim">Engineering</em> <span class="ht-word ht-anim">Solutions</span>
+      </span>
+    </h1>
+    <br/>
+    <div class="ht-underline" aria-hidden="true"></div>
+    <p class="hero-sub"><b>{site.tagline}</b></p>
+    <p class="hero-micro">
+      <span class="hm-arrow">↳</span>
+      {site.micro}
+    </p>
+    <div class="hero-btns">
+      <a href="#services" class="btn btn-p">Our Services <span class="btn-arrow">↓</span></a>
+      <a href="#contact"  class="btn btn-o">Start a Conversation</a>
+    </div>
+    <div class="hero-stats-rail" aria-label="Key engineering metrics">
+      <div class="hsr-edge hsr-edge-l" aria-hidden="true"></div>
+      <div class="hero-stats">
+        {heroStats.map((s) => (
+          <div class="stat-item">
+            <div class="stat-icon" set:html={s.icon} aria-hidden="true"></div>
+            <div class="stat-body">
+              <div class="stat-n" data-val={s.value} data-suffix={s.suffix}>0</div>
+              <div class="stat-l">{s.label}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="hsr-edge hsr-edge-r" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- Gear system canvas — drawn and animated via JS -->
+  <canvas id="gearCvs" aria-hidden="true"></canvas>
+
+  <div class="scroll-ind">
+    <div class="scroll-line"></div>
+    <span>Scroll to explore</span>
+  </div>
+</section>
+
+<script is:inline>
+(function () {
+  function initGears() {
+    var cvs  = document.getElementById('gearCvs');
+    var hero = document.getElementById('hero');
+    if (!cvs || !hero) return;
+    var ctx = cvs.getContext('2d');
+    var W, H;
+
+    function resize() {
+      W = hero.offsetWidth;
+      H = hero.offsetHeight;
+      cvs.width  = W;
+      cvs.height = H;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    /* ── Gear specs ─────────────────────────────────────────────────
+       t = tip radius  r = root radius  h = hub radius
+       N = teeth  sp = spokes  col = stroke colour  op = base opacity  */
+    var GEARS = [
+      { t:94, r:74, h:25, N:16, sp:4, col:'#F47B20', op:0.80 }, // A — large centre
+      { t:57, r:44, h:14, N:10, sp:3, col:'#FFD3A5', op:0.68 }, // B — medium upper-right
+      { t:34, r:26, h: 9, N: 6, sp:2, col:'#FFD3A5', op:0.54 }, // D — small, off B (was index 3)
+      { t:42, r:31, h:10, N: 7, sp:3, col:'#F47B20', op:0.58 }, // E — small, right of A (was index 4)
+      { t:52, r:40, h:13, N: 9, sp:3, col:'#FFD3A5', op:0.64 }, // G — medium, above A (was index 5)
+    ];
+
+    /* Pitch radii */
+    var P = GEARS.map(function(g){ return (g.t + g.r) / 2; });
+    /* P[0]=64.5  P[1]=39  P[2]=23  P[3]=28  P[4]=35.5 */
+
+    /* Speed ratios relative to A — opposite sign = reverse direction
+       Each gear's speed = -(driver.N / driven.N) * driver_speed        */
+    var sA =  1;
+    var sB = -(GEARS[0].N / GEARS[1].N);             /* -16/10 = -1.6      */
+    var sD =  (GEARS[1].N / GEARS[2].N) * Math.abs(sB); /* B→D: reverse B */
+    var sE = -(GEARS[0].N / GEARS[3].N);             /* -16/7  ≈ -2.286   */
+    var sG = -(GEARS[0].N / GEARS[4].N);             /* -16/9  ≈ -1.778   */
+    var SPEEDS = [sA, sB, sD, sE, sG];
+
+    /* ── Draw a single gear ──────────────────────────────────────── */
+    function buildToothPath(g, cx, cy, angle) {
+      var TAU  = Math.PI * 2;
+      var step = TAU / g.N;
+      var half = step * 0.26;
+      ctx.beginPath();
+      for (var i = 0; i < g.N; i++) {
+        var base    = angle + i * step;
+        var prevEnd = (i === 0) ? angle - half : angle + (i - 1) * step + half;
+        ctx.arc(cx, cy, g.r, prevEnd, base - half, false);
+        ctx.lineTo(cx + g.t * Math.cos(base - half), cy + g.t * Math.sin(base - half));
+        ctx.arc(cx, cy, g.t, base - half, base + half, false);
+        ctx.lineTo(cx + g.r * Math.cos(base + half), cy + g.r * Math.sin(base + half));
+      }
+      ctx.closePath();
+    }
+
+    /* Theme-aware gear color. Original hexes (#F47B20 orange, #FFD3A5 peach)
+       are tuned for dark bg; on cream the peach disappears and the orange
+       washes out. Map both to deeper shades when data-theme="light". Kept in
+       sync with theme changes via a MutationObserver on <html data-theme>. */
+    var THEME = document.documentElement.getAttribute('data-theme') || 'dark';
+    new MutationObserver(function () {
+      THEME = document.documentElement.getAttribute('data-theme') || 'dark';
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    function gearColor(g) {
+      if (THEME !== 'light') return g.col;
+      if (g.col === '#F47B20') return '#8C3D08';   /* deep brown-orange for primary gears */
+      if (g.col === '#FFD3A5') return '#B85508';   /* deep orange for secondary peach gears */
+      return g.col;
+    }
+
+    function drawGear(g, cx, cy, angle) {
+      var TAU = Math.PI * 2;
+      var col = gearColor(g);
+      ctx.save();
+      ctx.strokeStyle = col;
+      ctx.lineCap     = 'round';
+      ctx.lineJoin    = 'round';
+      ctx.shadowColor = col;
+
+      /* 1 — Bloom pass (wide soft glow) */
+      buildToothPath(g, cx, cy, angle);
+      ctx.lineWidth  = 7; ctx.shadowBlur = 40;
+      ctx.globalAlpha = g.op * 0.13; ctx.stroke();
+
+      /* 2 — Mid glow */
+      buildToothPath(g, cx, cy, angle);
+      ctx.lineWidth  = 3; ctx.shadowBlur = 20;
+      ctx.globalAlpha = g.op * 0.35; ctx.stroke();
+
+      /* 3 — Crisp outline */
+      buildToothPath(g, cx, cy, angle);
+      ctx.lineWidth  = 1.8; ctx.shadowBlur = 8;
+      ctx.globalAlpha = g.op; ctx.stroke();
+
+      /* Inner hub ring */
+      ctx.beginPath(); ctx.arc(cx, cy, g.h, 0, TAU);
+      ctx.lineWidth = 1.6; ctx.shadowBlur = 10;
+      ctx.globalAlpha = g.op * 0.88; ctx.stroke();
+
+      /* Spokes */
+      for (var s = 0; s < g.sp; s++) {
+        var a = angle + s * TAU / g.sp;
+        ctx.beginPath();
+        ctx.moveTo(cx + g.h * Math.cos(a), cy + g.h * Math.sin(a));
+        ctx.lineTo(cx + (g.r - 4) * Math.cos(a), cy + (g.r - 4) * Math.sin(a));
+        ctx.lineWidth = 1.4; ctx.shadowBlur = 6;
+        ctx.globalAlpha = g.op * 0.72; ctx.stroke();
+      }
+
+      /* Centre bolt — glow fill */
+      ctx.beginPath(); ctx.arc(cx, cy, 5, 0, TAU);
+      ctx.fillStyle = col; ctx.shadowBlur = 22;
+      ctx.globalAlpha = g.op; ctx.fill();
+
+      ctx.restore();
+    }
+ 
+    /* ── Centre positions ────────────────────────────────────────── */
+    /* Gear A anchored at the geometric centre of the hero's right half:
+       horizontally at 75% of hero width (midpoint between centre-line and
+       right edge), vertically at 50%. Cluster extends up-right from A.
+       Hero height is locked to 760px so ay is constant; ax scales with
+       viewport width (no fixed-pixel option here since "right half" is
+       inherently relative to the hero box). */
+    function buildPositions() {
+      var ax = W * 0.83;
+      var ay = H * 0.45;
+      var pos = [[ax, ay]];
+
+      /* A–B  angle -0.88 (up-right from A) */
+      var dAB = P[0]+P[1]; pos.push([ax+dAB*Math.cos(-0.88), ay+dAB*Math.sin(-0.88)]);
+      /* B–D  angle  0.42 (right of B) */
+      var dBD = P[1]+P[2]; pos.push([pos[1][0]+dBD*Math.cos(0.42), pos[1][1]+dBD*Math.sin(0.42)]);
+      /* A–E  angle -0.08 (right of A, nearly horizontal) */
+      var dAE = P[0]+P[3]; pos.push([ax+dAE*Math.cos(-0.08), ay+dAE*Math.sin(-0.08)]);
+      /* A–G  angle -1.55 (straight up from A) */
+      var dAG = P[0]+P[4]; pos.push([ax+dAG*Math.cos(-1.55), ay+dAG*Math.sin(-1.55)]);
+
+      return pos;
+    }
+
+    /* ── Scroll / visibility state ───────────────────────────────── */
+    var paused = false, scrollPct = 0;
+    new IntersectionObserver(function(es){ paused = !es[0].isIntersecting; },{ threshold:0 }).observe(hero);
+    document.addEventListener('visibilitychange', function(){ paused = document.hidden; });
+    window.addEventListener('scroll', function(){
+      scrollPct = Math.min(window.scrollY / (H || 800), 1);
+    },{ passive:true });
+
+    /* ── Render loop — timestamp-based so speed is frame-rate independent ── */
+    var pos;
+    function animate(ts) {
+      requestAnimationFrame(animate);
+      if (paused) return;
+
+      var fade = Math.max(0, 1 - scrollPct * 2.2);
+      ctx.clearRect(0, 0, W, H);
+      if (fade <= 0) return;
+
+      pos = buildPositions();
+      var ω = ts * 0.00055; /* radians — same speed at any fps */
+
+      ctx.save();
+      ctx.globalAlpha = fade;
+
+      /* Gear A is clipped to (wedge ∪ centre disc):
+           Wedge — angular range in user convention (0° at horizontal LEFT,
+                   CW positive). The hidden arc looks "tucked behind" the
+                   refinery image.
+           Disc  — always-visible circle around A's centre so the hub ring,
+                   centre bolt, and inner spokes never disappear into the
+                   hidden arc. Tune aInnerR to expose more/less of the centre. */
+      var GA       = GEARS[0];
+      var aStart   = (180 +  20) * Math.PI / 180;
+      var aEnd     = (180 + 260) * Math.PI / 180;
+      var aOuterR  = GA.t + 50;                     /* tip radius + bloom margin */
+      var aInnerR  = GA.h + 7;                     /* hub r=25 + 22 = 47px disc */
+
+      for (var i = 0; i < GEARS.length; i++) {
+        if (i === 0) {
+          ctx.save();
+          ctx.beginPath();
+          /* Wedge sub-path */
+          ctx.moveTo(pos[0][0], pos[0][1]);
+          ctx.arc(pos[0][0], pos[0][1], aOuterR, aStart, aEnd, false);
+          ctx.closePath();
+          /* Centre-disc sub-path (always visible) */
+          ctx.moveTo(pos[0][0] + aInnerR, pos[0][1]);
+          ctx.arc(pos[0][0], pos[0][1], aInnerR, 0, Math.PI * 2);
+          ctx.clip();
+          drawGear(GA, pos[0][0], pos[0][1], ω * SPEEDS[0]);
+          ctx.restore();
+        } else {
+          drawGear(GEARS[i], pos[i][0], pos[i][1], ω * SPEEDS[i]);
+        }
+      }
+      ctx.restore();
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGears);
+  } else {
+    initGears();
+  }
+})();
+</script>
+
+<!-- Scale "Engineering Solutions" horizontally to match NEXORA's exact pixel width -->
+<script is:inline>
+(function () {
+  function matchTitleWidth() {
+    var nexora = document.querySelector('#hero .ht-nexora');
+    var row    = document.querySelector('#hero .ht-row');
+    if (!nexora || !row) return;
+
+    /* Reset any previous transform so measurements are of natural widths */
+    row.style.transform = '';
+
+    /* Measure NEXORA's natural text pixel width (temporarily inline) */
+    nexora.style.display = 'inline-block';
+    var nW = nexora.getBoundingClientRect().width;
+    nexora.style.display = '';
+
+    /* Measure subtitle's natural text pixel width (temporarily inline) */
+    row.style.display = 'inline-block';
+    var rW = row.getBoundingClientRect().width;
+    row.style.display = '';
+
+    if (rW <= 0 || nW <= 0) return;
+
+    /* Scale subtitle horizontally from its left edge to fill exactly nW */
+    row.style.transformOrigin = 'left center';
+    row.style.transform = 'scaleX(' + (nW / rW).toFixed(6) + ')';
+  }
+
+  document.fonts.ready.then(function () {
+    matchTitleWidth();
+    window.addEventListener('resize', matchTitleWidth, { passive: true });
+  });
+})();
+</script>

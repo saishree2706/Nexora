@@ -1,0 +1,11 @@
+---
+import { icons } from '../data/icons.js';
+const { name, class: cls = '', size = 24, ariaHidden = true } = Astro.props;
+const svg = icons[name] || '';
+---
+<span
+  class={`icon ${cls}`}
+  style={`width:${size}px;height:${size}px;display:inline-block;line-height:0`}
+  aria-hidden={ariaHidden ? 'true' : 'false'}
+  set:html={svg}
+></span>

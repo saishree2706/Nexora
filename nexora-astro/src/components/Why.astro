@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+import { whyItems } from '../data/why.js';
+---
+<section id="why">
+  <div class="why-head">
+    <div class="s-label rv"><span class="sec-num">05 /</span> Why Choose Us</div>
+    <h2 class="s-title rv">
+      Built Different.<br />
+      <span style="color:var(--g)">Delivered Better.</span>
+    </h2>
+    <p class="s-desc rv" style="margin-top:1rem">
+      Engineering rooted in coastal Karnataka, combining regional technical strength with
+      global engineering practices, delivering across both onshore and offshore systems.
+    </p>
+  </div>
+
+  <div class="why-list">
+    {whyItems.map((item, index) => (
+      <div class="why-item rv card-3d" style={`transition-delay:${0.06 + index * 0.06}s`}>
+        <div class="why-ico"><Icon name={item.iconKey} size={20} /></div>
+        <div>
+          <h4>{item.title}</h4>
+          <p>{item.desc}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

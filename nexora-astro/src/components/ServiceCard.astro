@@ -1,0 +1,45 @@
+---
+import Icon from './Icon.astro';
+const { service, index } = Astro.props;
+const num   = String(index + 1).padStart(2, '0');
+const delay = `${index * 0.05}s`;
+const bodyId = `svc-body-${index}`;
+---
+<article class="svc-card rv" data-svc-card style={`transition-delay:${delay}`}>
+
+  {/* Full-bleed background image */}
+  {service.img && (
+    <span class="svc-img" aria-hidden="true">
+      <img src={service.img} alt="" loading="lazy" />
+    </span>
+  )}
+
+  {/* Gradient overlay — darkens toward bottom for text legibility */}
+  <span class="svc-overlay" aria-hidden="true"></span>
+
+  <button
+    type="button"
+    class="svc-toggle"
+    aria-expanded="false"
+    aria-controls={bodyId}
+    data-svc-toggle
+  >
+    <span class="svc-ico-wrap" aria-hidden="true">
+      <Icon name={service.iconKey} size={26} />
+    </span>
+    <span class="svc-title-row">
+      <span class="svc-n">{num}</span>
+      <span class="svc-title">{service.title}</span>
+    </span>
+    <span class="svc-indicator" aria-hidden="true">
+      <span class="svc-plus"></span>
+    </span>
+  </button>
+
+  <div class="svc-body" id={bodyId}>
+    <div class="svc-body-inner">
+      <p class="svc-desc">{service.desc}</p>
+    </div>
+  </div>
+
+</article>
