@@ -93,7 +93,7 @@ export async function POST({ request }) {
   const subject = `New enquiry from ${name} — ${service}`;
 
   const siteUrl = readEnv('SITE_URL') || 'https://nexoraglobales.com';
-  const logoUrl = readEnv('LOGO_URL') || `${siteUrl}/nexora-logo.png`;
+  const logoUrl = readEnv('LOGO_URL') || `${siteUrl}/nexora_new_logo.png`;
   const receivedAt = new Date().toLocaleString('en-IN', {
     timeZone: 'Asia/Kolkata',
     dateStyle: 'medium',
