@@ -6,8 +6,7 @@ export const verticals = [
     sub:   '01 Vertical',
     title: 'Onshore',
     accent:'orange',
-    // "Aerial View of an Oil Refinery at Sunset" — Tom Fisk, Pexels #10407692
-    img: 'https://images.pexels.com/photos/10407692/pexels-photo-10407692.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&fit=crop',
+    img: '/Onshore.png',
     tags: [
       'Oil & Gas',
       'Food & Beverage',
@@ -26,8 +25,7 @@ export const verticals = [
     sub:   '02 Vertical',
     title: 'Offshore',
     accent:'blue',
-    // "Offshore Oil Platform at Sea" — Pexels #3216911
-    img: 'https://images.pexels.com/photos/3216911/pexels-photo-3216911.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&fit=crop',
+    img: '/Offshore.png',
     tags: [
       'FPSO',
       'FPU',
