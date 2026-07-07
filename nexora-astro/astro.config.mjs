@@ -4,5 +4,8 @@ import vercel from '@astrojs/vercel';
 
 export default defineConfig({
   output: 'server',
-  adapter: vercel(),
+  adapter: vercel({
+    // Optimize/resize/cache images at the edge via Vercel's Image Optimization API.
+    imageService: true,
+  }),
 });

@@ -1,16 +1,25 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
+
+// Eagerly import all optimizable service images so we can resolve one by filename.
+const serviceImages = import.meta.glob('../assets/services/*.{png,jpg,jpeg,webp}', {
+  eager: true,
+  import: 'default',
+});
+
 const { service, index } = Astro.props;
 const num   = String(index + 1).padStart(2, '0');
 const delay = `${index * 0.05}s`;
 const bodyId = `svc-body-${index}`;
+const img = service.img ? serviceImages[`../assets/services/${service.img}`] : undefined;
 ---
 <article class="svc-card rv" data-svc-card style={`transition-delay:${delay}`}>
 
   {/* Full-bleed background image */}
-  {service.img && (
+  {img && (
     <span class="svc-img" aria-hidden="true">
-      <img src={service.img} alt="" loading="lazy" />
+      <Image src={img} alt="" width={800} quality={70} loading="lazy" />
     </span>
   )}
 

@@ -1,6 +1,13 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import { verticals } from '../data/industries.js';
+
+// Eagerly import vertical images so we can resolve one by filename.
+const verticalImages = import.meta.glob('../assets/verticals/*.{png,jpg,jpeg,webp}', {
+  eager: true,
+  import: 'default',
+});
 ---
 <section id="industries">
   <div class="rv">
@@ -14,14 +21,16 @@ import { verticals } from '../data/industries.js';
   </div>
 
   <div class="vert-grid">
-    {verticals.map((v, vi) => (
+    {verticals.map((v, vi) => {
+      const vImg = v.img ? verticalImages[`../assets/verticals/${v.img}`] : undefined;
+      return (
       <article
         class={`vert-card rv card-3d vert-${v.accent}`}
         style={`transition-delay:${0.1 + vi * 0.08}s`}
       >
-        {v.img && (
+        {vImg && (
           <span class="vert-img" aria-hidden="true">
-            <img src={v.img} alt="" loading="lazy" />
+            <Image src={vImg} alt="" width={1100} quality={72} loading="lazy" />
           </span>
         )}
         <div class="vert-rail">
@@ -64,6 +73,7 @@ import { verticals } from '../data/industries.js';
 
         <div class="vert-glow" aria-hidden="true"></div>
       </article>
-    ))}
+      );
+    })}
   </div>
 </section>

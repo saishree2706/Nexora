@@ -12,7 +12,15 @@
       "Bash(awk 'NR>=3260 && NR<=3340 { print NR\": \"$0 }' \"c:/Workspace/Talent/Nexora/nexora-astro/src/styles/global.css\")",
       "Bash(npm install *)",
       "Bash(npm view *)",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(awk '{printf \"%8.0f KB  %s\\\\n\", $5/1024, $9}')",
+      "Bash(mkdir -p src/assets/services src/assets/verticals)",
+      "Bash(mv \"public/Process.png\" \"src/assets/services/process.png\")",
+      "Bash(mv \"public/Mechanical Equipment.png\" \"src/assets/services/mechanical.png\")",
+      "Bash(mv \"public/HSE HFE.png\" \"src/assets/services/hse.png\")",
+      "Bash(mv \"public/Piping.png\" \"src/assets/services/piping.png\")",
+      "Bash(node -e \"require.resolve\\('sharp'\\); console.log\\('sharp OK'\\)\")",
+      "Bash(npx astro *)"
     ]
   }
 }

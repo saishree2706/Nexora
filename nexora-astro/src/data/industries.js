@@ -6,7 +6,7 @@ export const verticals = [
     sub:   '01 Vertical',
     title: 'Onshore',
     accent:'orange',
-    img: '/Onshore.png',
+    img: 'onshore.png',
     tags: [
       'Oil & Gas',
       'Food & Beverage',
@@ -25,7 +25,7 @@ export const verticals = [
     sub:   '02 Vertical',
     title: 'Offshore',
     accent:'blue',
-    img: '/Offshore.png',
+    img: 'offshore.png',
     tags: [
       'FPSO',
       'FPU',
