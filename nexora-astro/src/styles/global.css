@@ -265,10 +265,20 @@ nav#navbar.scrolled { background: rgba(6, 13, 31, 0.97); }
 /* Project tile overlay — light cream gradient instead of dark navy/warm so
    the hover state on a light page doesn't slam the user with a dark blob. */
 [data-theme="light"] .proj-overlay {
-  background: linear-gradient(180deg, rgba(232, 221, 200, 0) 25%, rgba(232, 221, 200, 0.96) 80%, rgba(220, 205, 178, 1) 100%);
+  /* No gradient in light mode — label sits directly on the clean photo. */
+  background: none;
+  opacity: 1;
+}
+/* With no gradient backing, the label sits on the raw photo — use a light
+   title (like dark mode) plus a soft dark shadow so it reads on any image. */
+[data-theme="light"] .proj-overlay-title {
+  color: #FFFFFF;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+}
+[data-theme="light"] .proj-overlay .proj-cat {
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
 }
 [data-theme="light"] .proj-overlay .proj-cat { color: var(--g); }
-[data-theme="light"] .proj-overlay-title { color: var(--white); }
 [data-theme="light"] .proj-overlay .pc-line { background: var(--g); }
 
 /* Service card hover gradient — base CSS uses rgba(6,13,31,.92) which paints
@@ -2633,13 +2643,13 @@ section>.rv {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(.55) saturate(.75);
+    filter: brightness(.75) saturate(.8);
     transition: transform .8s cubic-bezier(.2, .7, .2, 1), filter .5s ease;
   }
 
   .svc-card:hover .svc-img img {
     transform: scale(1.08);
-    filter: brightness(.38) saturate(.65);
+    filter: brightness(.58) saturate(.7);
   }
 
   /* Gradient overlay — clear at top, dark at bottom */
@@ -2650,9 +2660,9 @@ section>.rv {
     z-index: 1;
     background: linear-gradient(
       165deg,
-      rgba(6,13,31,.05) 0%,
-      rgba(6,13,31,.4)  50%,
-      rgba(6,13,31,.92) 100%
+      rgba(6,13,31,0)   0%,
+      rgba(6,13,31,.22) 50%,
+      rgba(6,13,31,.78) 100%
     );
     transition: background .5s ease;
   }
@@ -2660,9 +2670,9 @@ section>.rv {
   .svc-card:hover .svc-overlay {
     background: linear-gradient(
       165deg,
-      rgba(6,13,31,.15) 0%,
-      rgba(6,13,31,.58) 45%,
-      rgba(6,13,31,.97) 100%
+      rgba(6,13,31,.08) 0%,
+      rgba(6,13,31,.4)  45%,
+      rgba(6,13,31,.86) 100%
     );
   }
 
@@ -5610,7 +5620,7 @@ a.ft-coords:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(.6) saturate(.75);
+  filter: brightness(.8) saturate(.8);
   transition: filter .6s ease, transform .65s cubic-bezier(.2, .7, .2, 1);
 }
 
@@ -5619,7 +5629,7 @@ a.ft-coords:hover {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(4, 10, 24, 0.50);
+  background: rgba(4, 10, 24, 0.32);
 }
 
 /* Ensure the glow ::before renders above the photo */
@@ -5629,7 +5639,7 @@ a.ft-coords:hover {
 
 /* Slightly reveal the photo on hover for depth */
 .vert-card:has(.vert-img):hover .vert-img img {
-  filter: brightness(.75) saturate(.85);
+  filter: brightness(.92) saturate(.9);
   transform: scale(1.05);
 }
 
