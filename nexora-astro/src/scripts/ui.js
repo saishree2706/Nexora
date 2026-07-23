@@ -267,7 +267,7 @@ function setupReveals() {
      Other groups keep the gentler lift. */
   const groups = [
     { sel: '.svc-grid',   item: '.svc-card',  fadeOnly: true  },
-    { sel: '.vert-grid',  item: '.vert-card', fadeOnly: false },
+    { sel: '.vert-grid',  item: '.vert-card', fadeOnly: true  },
     { sel: '.proj-grid',  item: '.proj-tile', fadeOnly: true  },
     { sel: '.why-list',   item: '.why-item',  fadeOnly: false },
     { sel: '.vm-grid',    item: '.vm-card',   fadeOnly: false },
@@ -291,19 +291,6 @@ function setupReveals() {
     });
   });
 
-  /* vert-tag chip stagger inside each card */
-  document.querySelectorAll('.vert-card').forEach((card) => {
-    const tags = card.querySelectorAll('.vert-tag');
-    gsap.fromTo(tags,
-      { y: 14, opacity: 0 },
-      {
-        y: 0, opacity: 1,
-        duration: 0.55, ease: 'power3.out',
-        stagger: 0.03,
-        scrollTrigger: { trigger: card, start: 'top 80%', once: true },
-      }
-    );
-  });
 }
 setupReveals();
 
@@ -333,7 +320,7 @@ document.querySelectorAll('[data-val]').forEach((el) => {
 /* ─────────────────────────────────────────────────────────────────
    3D CARD TILT · gsap.quickTo (smooth, frame-rate independent)
    ───────────────────────────────────────────────────────────────── */
-const cardEls = document.querySelectorAll('.ind-card, .vert-card, .vm-card, .why-item');
+const cardEls = document.querySelectorAll('.ind-card, .vm-card, .why-item');
 if (!isTouch && !reduceMotion) {
   cardEls.forEach((card) => {
     card.classList.add('card-3d');

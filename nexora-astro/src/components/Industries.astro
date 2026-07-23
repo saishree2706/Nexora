@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import Icon from './Icon.astro';
 import { verticals } from '../data/industries.js';
 
 // Eagerly import vertical images so we can resolve one by filename.
@@ -23,55 +22,30 @@ const verticalImages = import.meta.glob('../assets/verticals/*.{png,jpg,jpeg,web
   <div class="vert-grid">
     {verticals.map((v, vi) => {
       const vImg = v.img ? verticalImages[`../assets/verticals/${v.img}`] : undefined;
+      const num  = String(vi + 1).padStart(2, '0');
       return (
       <article
-        class={`vert-card rv card-3d vert-${v.accent}`}
-        style={`transition-delay:${0.1 + vi * 0.08}s`}
+        class={`card vert-card rv vert-${v.accent}`}
+        style={`transition-delay:${vi * 0.08}s`}
       >
         {vImg && (
-          <span class="vert-img" aria-hidden="true">
-            <Image src={vImg} alt="" width={1100} quality={72} loading="lazy" />
+          <span class="card-media">
+            <Image src={vImg} alt={v.title} width={1100} quality={72} loading="lazy" />
           </span>
         )}
-        <div class="vert-rail">
-          <span class="vert-sub">{v.sub}</span>
+
+        <div class="card-body">
+          <span class="card-kicker">{num} · Vertical</span>
+          <h3 class="card-title">{v.title}</h3>
+          <p class="card-text">
+            Full-scope engineering delivery across {v.tags.length} {v.title.toLowerCase()} sectors.
+          </p>
+          <ul class="vert-tags">
+            {v.tags.map((t) => (
+              <li class="vert-tag">{t}</li>
+            ))}
+          </ul>
         </div>
-
-        <div class="vert-head">
-          <span class="vert-ico" aria-hidden="true">
-            <Icon name={v.iconKey} size={42} />
-          </span>
-          <h3 class="vert-title">{v.title}</h3>
-        </div>
-
-        <div class="vert-stats">
-          <div class="vstat">
-            <span
-              class="vstat-n"
-              data-val={v.tags.length}
-              data-suffix=""
-            >0</span>
-            <span class="vstat-l">Sub-verticals</span>
-          </div>
-          <div class="vstat-divider"></div>
-          <div class="vstat">
-            <span class="vstat-n">100<small>%</small></span>
-            <span class="vstat-l">In-house expertise</span>
-          </div>
-        </div>
-
-        <p class="vert-meta">Sectors served</p>
-
-        <ul class="vert-tags">
-          {v.tags.map((t, ti) => (
-            <li class="vert-tag" style={`--ti:${ti}`}>
-              <span class="vert-tag-dot"></span>
-              {t}
-            </li>
-          ))}
-        </ul>
-
-        <div class="vert-glow" aria-hidden="true"></div>
       </article>
       );
     })}

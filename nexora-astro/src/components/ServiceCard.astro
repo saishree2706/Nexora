@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import Icon from './Icon.astro';
 
 // Eagerly import all optimizable service images so we can resolve one by filename.
 const serviceImages = import.meta.glob('../assets/services/*.{png,jpg,jpeg,webp}', {
@@ -11,44 +10,18 @@ const serviceImages = import.meta.glob('../assets/services/*.{png,jpg,jpeg,webp}
 const { service, index } = Astro.props;
 const num   = String(index + 1).padStart(2, '0');
 const delay = `${index * 0.05}s`;
-const bodyId = `svc-body-${index}`;
-const img = service.img ? serviceImages[`../assets/services/${service.img}`] : undefined;
+const img   = service.img ? serviceImages[`../assets/services/${service.img}`] : undefined;
 ---
-<article class="svc-card rv" data-svc-card style={`transition-delay:${delay}`}>
-
-  {/* Full-bleed background image */}
+<article class="card svc-card rv" style={`transition-delay:${delay}`}>
   {img && (
-    <span class="svc-img" aria-hidden="true">
-      <Image src={img} alt="" width={800} quality={70} loading="lazy" />
+    <span class="card-media">
+      <Image src={img} alt={service.title} width={800} quality={72} loading="lazy" />
     </span>
   )}
 
-  {/* Gradient overlay — darkens toward bottom for text legibility */}
-  <span class="svc-overlay" aria-hidden="true"></span>
-
-  <button
-    type="button"
-    class="svc-toggle"
-    aria-expanded="false"
-    aria-controls={bodyId}
-    data-svc-toggle
-  >
-    <span class="svc-ico-wrap" aria-hidden="true">
-      <Icon name={service.iconKey} size={26} />
-    </span>
-    <span class="svc-title-row">
-      <span class="svc-n">{num}</span>
-      <span class="svc-title">{service.title}</span>
-    </span>
-    <span class="svc-indicator" aria-hidden="true">
-      <span class="svc-plus"></span>
-    </span>
-  </button>
-
-  <div class="svc-body" id={bodyId}>
-    <div class="svc-body-inner">
-      <p class="svc-desc">{service.desc}</p>
-    </div>
+  <div class="card-body">
+    <span class="card-kicker">{num} · Service</span>
+    <h3 class="card-title">{service.title}</h3>
+    {service.desc && <p class="card-text">{service.desc}</p>}
   </div>
-
 </article>

@@ -1,67 +1,18 @@
 ---
 const { project, index } = Astro.props;
-const num         = String(index + 1).padStart(2, '0');
-const revealClass = project.featured ? 'rvl' : 'rv';
-const delay       = project.featured ? '' : `transition-delay:${0.1 + index * 0.05}s`;
-const bodyId      = `proj-body-${index}`;
-
-// Edge positioning class: first card shifts floater right, last shifts left
-const floaterPos  = index === 0 ? 'pf-edge-left' : index === 4 ? 'pf-edge-right' : '';
+const num   = String(index + 1).padStart(2, '0');
+const delay = `${index * 0.05}s`;
 ---
-<article class={`proj-tile ${revealClass}`} data-proj-tile style={delay}>
-  <button
-    type="button"
-    class="proj-toggle"
-    aria-expanded="false"
-    aria-controls={bodyId}
-    data-proj-toggle
-  >
-    <span class="proj-thumb" aria-hidden="true">
-      <img src={project.img} alt="" loading="lazy" />
+<article class="card proj-tile rv" style={`transition-delay:${delay}`}>
+  {project.img && (
+    <span class="card-media">
+      <img src={project.img} alt={project.title} loading="lazy" />
     </span>
-    <span class="proj-title-row">
-      <span class="proj-n">{num}</span>
-      <span class="proj-title">{project.title}</span>
-    </span>
-    <span class="proj-indicator" aria-hidden="true">
-      <span class="proj-plus"></span>
-    </span>
-  </button>
+  )}
 
-  <!-- Existing bottom overlay (always visible on desktop) -->
-  <div class="proj-overlay" aria-hidden="true">
-    <div class="proj-cat">
-      <span class="pc-line"></span>
-      {project.cat}
-    </div>
-    <h3 class="proj-overlay-title">{project.title}</h3>
-  </div>
-
-  <!-- Hover floater popup — desktop only -->
-  <div class={`proj-floater ${floaterPos}`} aria-hidden="true" data-proj-floater>
-    <div class="pf-img">
-      <img src={project.img} alt="" loading="lazy" />
-      <span class="pf-cat-badge">{project.cat}</span>
-    </div>
-    <div class="pf-body">
-      <h4 class="pf-title">{project.title}</h4>
-      <p class="pf-desc">{project.desc}</p>
-      <div class="pf-footer">
-        <span class="pf-status">
-          <span class="pf-dot"></span>
-          Active Project
-        </span>
-        <span class="pf-num">{num} / 05</span>
-      </div>
-    </div>
-    <div class="pf-arrow" aria-hidden="true"></div>
-  </div>
-
-  <!-- Mobile accordion body -->
-  <div class="proj-body" id={bodyId}>
-    <div class="proj-body-inner">
-      <span class="proj-cat-label">{project.cat}</span>
-      {project.desc && <p class="proj-body-desc">{project.desc}</p>}
-    </div>
+  <div class="card-body">
+    <span class="card-kicker">{num} · {project.cat}</span>
+    <h3 class="card-title">{project.title}</h3>
+    {project.desc && <p class="card-text">{project.desc}</p>}
   </div>
 </article>
